@@ -1,0 +1,167 @@
+// THIS FILE WILL RESET YOUR DATABASE - PROCEED WITH CAUTION
+//pulling in connection to my local database
+const client = require("./helpers/client")
+const { createPoketype_egg, createInitialPoketype_egg} = require ("./helpers/poketype_egg")
+const { createBreeding, createInitialBreeding }  = require ("./helpers/breeding")
+const { createEgg_group, createInitialEgg_group } = require ("./helpers/egg_group")
+const { createG_max, createInitialG_max } = require ("./helpers/g_max")
+const { createPokedata, createInitialPokedata } = require ("./helpers/pokedata")
+const {poketype_egg, breeding, egg_group, g_max, pokedata} = require("./seedData")
+
+//Drop Tables for cleanliness
+const dropTables = async () => {
+  try {
+    console.log("Starting to drop tables");
+    await client.query(`
+        DROP TABLE IF EXISTS pokedata;
+        DROP TABLE IF EXISTS g_max;
+        DROP TABLE IF EXISTS poketype_egg;
+        DROP TABLE IF EXISTS breeding;
+        `);
+    console.log("Tables dropped!");
+  } catch (error) {
+    console.log("Error dropping tables");
+    throw error;
+  }
+};
+
+//Create Tables because we need a place for the data to live
+const createTables = async () => {
+  console.log("Building tables...");
+  await client.query(`
+        CREATE TABLE pokedata (
+			pokedata_id SERIAL PRIMARY KEY,
+           	national_num INTEGER UNIQUE NOT NULL,
+            pokename varchar(255) UNIQUE NOT NULL,
+			poketype varchar(255) NOT NULL,
+			pokespecies varchar(255) UNIQUE NOT NULL,
+			height varchar(255) NOT NULL,
+			weight varchar(255) NOT NULL,
+			sign_ability varchar(255) NOT NULL
+			);
+			
+			CREATE TABLE g_max (
+					g_max_id SERIAL PRIMARY KEY,
+				    pokename varchar(255) UNIQUE NOT NULL, 
+					g_max_move varchar(255) NOT NULL,
+				    g_max_move_type varchar(255) NOT NULL,
+					b4g_max_image varchar (255) NOT NULL, 
+					post_g_max_image varchar (255) NOT NULL,
+					post_g_max_height varchar(255) NOT NULL
+				);
+				
+				CREATE TABLE egg_group (
+					egg_group_id SERIAL PRIMARY KEY,
+				    egg_group varchar(255) NOT NULL
+				);
+				
+				CREATE TABLE poketype_egg (
+					poketype_id SERIAL PRIMARY KEY,
+						pokename varchar(255) UNIQUE NOT NULL, 
+						poketype varchar(255) NOT NULL,
+						egg_group varchar(255) 
+					);
+					
+					CREATE TABLE breeding (
+							breed_id SERIAL PRIMARY KEY,
+						    breeding_id varchar(255) UNIQUE NOT NULL, 
+						    pokename varchar(255) UNIQUE NOT NULL, 
+							egg_group varchar(255) NOT NULL,
+							gender varchar(255) NOT NULL,
+							comp_parent varchar(255) NOT NULL
+						);
+						`);
+
+  console.log("Tables built!");
+}
+
+//Insert mock data from seedData.js
+//Create trainers
+const createInitialPoketype_egg = async () => {
+  try {
+    //Looping through the "trainers" array from seedData
+    //Insert each trainer into the table
+    for (const egg of poketype_egg) await createPoketype_egg(egg);
+  } catch (error) {
+    throw error;
+  }
+}
+
+console.log("created poketype_egg")
+
+const createInitialPokedata = async () => {
+  try {
+    //Looping through the "trainers" array from seedData
+    //Insert each trainer into the table
+    for (const data of pokedata)
+      await createPokedata(data), console.log("created pokedata");
+  } catch (error) {
+    throw error;
+  }
+}
+
+console.log("created pokedata")
+
+const createInitialG_max = async () => {
+  try {
+    //Looping through the "trainers" array from seedData
+    //Insert each trainer into the table
+    for (const gmax of g_max)
+      await createG_max(gmax), console.log("created g_max");
+  } catch (error) {
+    throw error
+  }
+}
+
+console.log("created g_max")
+
+const createInitialEgg_group = async () => {
+  try {
+    //Looping through the "trainers" array from seedData
+    //Insert each trainer into the table
+    for (const group of egg_group)
+      await createEgg_group(group), console.log("created egg_group");
+  } catch (error) {
+    throw error
+  }
+}
+
+console.log("created egg_group")
+
+const createInitialBreeding = async () => {
+  try {
+    //Looping through the "trainers" array from seedData
+    //Insert each trainer into the table
+    for (const breeder of breeding)
+      await createBreeding(breeder), console.log("created breeding");
+  } catch (error) {
+    throw error
+  }
+}
+
+console.log("created breeding")
+//Call all my functions and 'BUILD' my database
+const rebuildDb = async () => {
+  try {
+    //ACTUALLY connect to my local database
+    client.connect()
+    //Run our functions
+    await dropTables()
+    await createTables()
+
+    //Generating starting data
+    console.log("starting to seed...")
+    await createInitialPoketype_egg()
+    await createInitialPokedata()
+    await createInitialEgg_group()
+    await createInitialG_max()
+    await createInitialBreeding()
+  } catch (error) {
+    console.error(error)
+  } finally {
+    //close our connection
+    client.end();
+  }
+}
+
+rebuildDb();
