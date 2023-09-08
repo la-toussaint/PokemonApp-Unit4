@@ -1,5 +1,5 @@
-const client = require('./client')
-// const { egg_group } = require("../seedData");
+const client = require("../client");
+const { egg_group } = require("../seedData");
 
 const createEgg_group = async ({ egg_group }) => {
   try {
@@ -14,28 +14,10 @@ const createEgg_group = async ({ egg_group }) => {
                 INSERT INTO egg_group(egg_group)
                 VALUES($1)
                 RETURNING *;
-            `,
+            `
       //Kind of like a dependency array, hooks up the parameters to the dolla dolla variables
-      [
-	
-		'Amorphous',
-		'Bug',
-		'Dragon',
-		'Fairy',
-		'Field',
-		'Flying',
-		'Grass',
-		'Human-Like',
-		'Mineral',
-		'Monster',
-		'Water 1',
-		'Water 2',
-		'Water 3',
-		'Ditto',
-		'Undiscovered'
-		]
-    );
-    return egg_group
+   [egg_group] );
+    return egg_group;
   } catch (error) {
     throw error;
   }

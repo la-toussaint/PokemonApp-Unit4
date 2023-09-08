@@ -1,4 +1,4 @@
-const client = require("./db/client");
+const client = require('./client');
 const util = require("util");
 
 // database functions

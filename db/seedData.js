@@ -40,7 +40,6 @@ const pokedata = [
 	{ national_num: '0884', pokename: 'Duraludon', poketype1: 'Steel', poketype2: 'Dragon', pokespecies: 'Flower', height: '0.4m', weight: '5.8kg', sign_ability: 'Chlorophyll'},
 	{ national_num: '0892', pokename: 'Urshifu', poketype1: 'Fighting', poketype2: 'Dark', pokespecies: 'Flower', height: '0.4m', weight: '5.8kg', sign_ability: 'Chlorophyll'},
 	{ national_num: '0869', pokename: 'Alcremie', poketype: 'Fairy', pokespecies: 'Cream', height: '0.3m', weight: '0.5kg', sign_ability: 'Sweet Veil'}, 
-	{ national_num: '0052', pokename: 'Meowth', poketype: 'Normal', pokespecies: 'Flower', height: '0.4m', weight: '5.8kg', sign_ability: 'Chlorophyll', b4g_max_image: '' },
 	{ national_num: '0973', pokename: 'Flamingo', poketype1: 'Flying', poketype2: 'Fighting', pokespecies: 'Flower', height: '1.9', weight: '105kg', sign_ability: 'Chlorophyll' }
 ]
    
@@ -164,7 +163,6 @@ const breeding = [
 	{breeding_id: 'Gravitas',	pokename: 'Orbeetle',	egg_group: 'Mineral', gender: '50% male, 50% female', comp_parent: 'Pachirisu' },
 	{breeding_id: '0834',	pokename:'Drednaw', egg_group: 'Mineral', gender: '50% male, 50% female', comp_parent: 'Pachirisu' },	
 	{breeding_id: '0839',	pokename: 'Coalossal',egg_group: 'Mineral', gender: '50% male, 50% female', comp_parent: 'Pachirisu' },
-	{breeding_id: '0842',	pokename: 'Appletun',	egg_group: 'Mineral', gender: '50% male, 50% female', comp_parent: 'Pachirisu' },
 	{breeding_id: '0844',	pokename: 'Sandaconda',	egg_group1: 'Field', egg_group2: 'Dragon', gender: '50% male, 50% female', comp_parent: 'Pachirisu' },
 	{breeding_id: '0849',	pokename: 'Toxtricity',		egg_group: 'Mineral', gender: '50% male, 50% female', comp_parent: 'Pachirisu' },
 	{breeding_id: '0851', pokename: 'Centiskorch', egg_group: 'Mineral', gender: '50% male, 50% female', comp_parent: 'Pachirisu' }

@@ -4,9 +4,9 @@ const util = require('util');
 async function getAllEgg_group() {
     try {
         const { rows } = await client.query(`
-        SELECT *
-        FROM egg_group;
-        `);
+		SELECT *
+        FROM egg_group:
+		`);
         return rows;
     } catch (error) {
         throw error;
@@ -16,13 +16,12 @@ async function getAllEgg_group() {
 // get egg_group by id
 async function getEgg_groupById(egg_group_id) {
 	try {
-		const {rows: [egg_group] } = await client.query(
+		const {rows: [egg_group] } = await client.query(`
+			SELECT *
+			FROM egg_group
+			WHERE egg_group_id =${egg_group_id};
 			`
-					  SELECT *
-					  FROM egg_group
-					  WHERE egg_group_id =${egg_group_id};
-				  `
-		  );
+			);
 		  return egg_group;
 		} catch (error) {
 		  throw error;
@@ -35,11 +34,10 @@ async function createEgg_groupData( { egg_group }) {
     try {
         const { rows: [egg_group] } = await client.query(`
         INSERT INTO egg_group(egg_group)
-        VALUES ($1)
+		VALUES($1)
         RETURNING *;
-        `,    
-		
-		[egg_group]);
+		`,
+		);
         return egg_group;
     } catch (error) {
         throw error;
@@ -52,10 +50,9 @@ async function createEgg_group({ egg_group }) {
     try {
         const { rows: [egg_group] } = await client.query(`
         INSERT INTO egg_group(egg_group)
-        VALUES ($1)
+        VALUES($1)
         RETURNING *;
-        `
-		[egg_group]);
+        `);
         return egg_group;
     } catch (error) {
         throw error;

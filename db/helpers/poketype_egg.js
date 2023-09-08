@@ -1,5 +1,5 @@
-const client = require("./client");
-const { poketype_egg } = require('./seedData');
+const client = require("../client");
+const { poketype_egg } = require('../seedData');
 
 const createPoketype_egg = async ({ pokename, poketype, egg_group }) => {
   try {

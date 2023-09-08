@@ -1,6 +1,7 @@
-const client = require('.client');
+const client = require('../client');
+const { breeding } = require('../seedData');
 
-const createBreeding = async ({pokename,egg_group1, egg_group2,gender,comp_parent}) => {
+const createBreeding = async ({breeding_id, pokename,egg_group1, egg_group2,gender,comp_parent}) => {
   try {
     const {
       rows: [breeding],
@@ -8,11 +9,11 @@ const createBreeding = async ({pokename,egg_group1, egg_group2,gender,comp_paren
     } = await client.query(
       `
                 INSERT INTO breeding(breeding_id, pokename, egg_group1, egg_group2, gender, comp_parent)
-                VALUES($1, $2, $3)
+                VALUES($1, $2, $3, $4, $5, $6)
                 RETURNING *;
             `,
       //Adding a ternary to secondary in case it's null, we then fill it in with "n/a"
-      [pokename, egg_group1, egg_group2 ? egg_group2 : "N/A"]
+      [breeding_id, pokename, egg_group1, egg_group2 ? egg_group2 : "N/A", gender, comp_parent]
     );
     return breeding;
   } catch (error) {

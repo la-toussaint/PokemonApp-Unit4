@@ -1,7 +1,7 @@
-const client = require("./client");
-const { pokedata } = require('./seedData');
+const client = require("../client");
+const { pokedata } = require('../seedData');
 
-const createPokedata = async ({national_num,pokename,poketype1,poketype2,pokespecies,height,weight,sign_ability}) => {
+const createPokedata = async ({national_num, pokename, poketype1, poketype2, pokespecies, height, weight, sign_ability}) => {
   try {
     const {
       rows: [pokedata],
@@ -13,7 +13,7 @@ const createPokedata = async ({national_num,pokename,poketype1,poketype2,pokespe
                 RETURNING *;
             `,
       //Adding a ternary to secondary in case it's null, we then fill it in with "n/a"
-      [pokename, poketype1, poketype2 ? poketype2 : "N/A"]
+	  [national_num, pokename, poketype1, poketype2 ? poketype2 : "N/A", pokespecies, height, weight, sign_ability]
     );
     return pokedata;
   } catch (error) {

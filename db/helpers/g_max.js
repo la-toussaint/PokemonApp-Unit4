@@ -1,20 +1,19 @@
-const client = require("./client");
+const client = require("../client");
+const { g_max } = require('../seedData');
 
-const createG_max = async ({g_max_move, pokename, g_max_move_type, b4g_max_image, post_g_max_image, post_g_max_height}) => {
+const createG_max = async ({g_max_move, pokename, g_max_move_type, b4g_max_image, post_g_max_image,post_g_max_height}) => {
   try {
     const {
       rows: [g_max],
       //need quotes in the primaryTypeId & secondaryTypeId because psql is picky with camelCase
     } = await client.query(
       `
-                INSERT INTO g_max(g_max_move, pokename, g_max_move_type, b4g_max_image, post_g_max_image, post_g_max_height )
+                INSERT INTO g_max( g_max_move, pokename, g_max_move_type, b4g_max_image, post_g_max_image, post_g_max_height )
                 VALUES($1, $2, $3, $4, $5, $6)
                 RETURNING *;
             `,
       //Adding a ternary to secondary in case it's null, we then fill it in with "n/a"
-      [pokename, g_max_move_type, g_max_move ? g_max_move : "N/A"][
-        (pokename, g_max_move, g_max_move_type ? g_max_move_type : "N/A")
-      ]
+      [g_max_move, pokename, g_max_move_type, b4g_max_image, post_g_max_image, post_g_max_height]
     );
     return g_max;
   } catch (error) {

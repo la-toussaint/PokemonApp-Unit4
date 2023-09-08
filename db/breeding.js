@@ -31,15 +31,17 @@ async function getBreedingById(breed_id) {
 	  
 
 // create new breeding
-async function createBreedingData( {pokename,egg_group1, egg_group2,gender,comp_parent }) {
+async function createBreedingData( {breeding_id, pokename,egg_group1, egg_group2,gender,comp_parent }) {
     try {
         const { rows: [breeding] } = await client.query(`
-        INSERT INTO breeding(pokename,egg_group1, egg_group2,gender,comp_parent)
-        VALUES ($1, $2, $3, $4, $5)
+        INSERT INTO breeding(pokename, egg_group1, egg_group2, gender, comp_parent)
+        VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING *;
-        `,    [pokename, egg_group1, egg_group2 ? egg_group2 : "N/A"],
+        `,    
 		
-		[pokename,egg_group1, egg_group2,gender,comp_parent]);
+		[breeding_id, pokename, egg_group1, egg_group2 ? egg_group2 : "N/A", gender, comp_parent]
+		
+		);
         return breeding;
     } catch (error) {
         throw error;
@@ -47,15 +49,18 @@ async function createBreedingData( {pokename,egg_group1, egg_group2,gender,comp_
 }
 
 // add new breeding
-async function createBreeding({ pokename,egg_group1, egg_group2,gender,comp_parent }) {
+async function createBreeding({ breeding_id, pokename,egg_group1, egg_group2,gender,comp_parent }) {
 
     try {
         const { rows: [breeding] } = await client.query(`
-        INSERT INTO breeding(pokename,egg_group1, egg_group2,gender,comp_parent)
-        VALUES ($1, $2, $3, $4, $5)
+        INSERT INTO breeding(breeding_id, pokename, egg_group1, egg_group2, gender, comp_parent)
+        VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING *;
-        `, [pokename, egg_group1, egg_group2 ? egg_group2 : "N/A"],
-		[pokename,egg_group1, egg_group2,gender,comp_parent]);
+        `, 
+		
+		[breeding_id, pokename, egg_group1, egg_group2 ? egg_group2 : "N/A", gender, comp_parent]
+		
+		);
         return breeding;
     } catch (error) {
         throw error;

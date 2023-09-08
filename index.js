@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 });
 
 // Router: /api
-app.use('/API', require('./API/index'));
+app.use('/api', require('../api/index'));
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
