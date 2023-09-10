@@ -1,0 +1,24 @@
+import React, { useState } from "react"; // Removed 'useEffect' import if it's not being used.
+
+export default function SearchBar({ setSearchParam }) {
+  const [query, setQuery] = useState<string>("");
+
+  const handleChange = (searchParam: string) => {
+    setQuery(searchParam);
+    setSearchParam(searchParam);
+  };
+
+  return (
+    <div className="search-bar">
+      <label>
+        Search:{" "}
+        <input
+          type="text"
+          placeholder="Search"
+          onChange={(e) => handleChange(e.target.value.toLowerCase())}
+          value={query}
+        />
+      </label>
+    </div>
+  );
+}
