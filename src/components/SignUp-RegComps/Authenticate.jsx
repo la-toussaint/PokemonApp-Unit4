@@ -1,7 +1,4 @@
 import { useState } from "react";
-const COHORT_NAME = "2306-GHP-ET-WEB-FT-SF";
-const BASE_URL = `https://strangers-things.herokuapp.com/api/${COHORT_NAME}`;
-const BASE_URL_USER_ME = `${BASE_URL}/users/me`;
 
 export default function Authenticate({ token }) {
   const [successMessage, setSuccessMessage] = useState(null);

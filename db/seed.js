@@ -1,12 +1,18 @@
 // THIS FILE WILL RESET YOUR DATABASE - PROCEED WITH CAUTION
 //pulling in connection to my local database
-const client = require('./client')
-const { createPoketype_egg } = require('./helpers/poketype_egg')
-const { createBreeding } = require('./helpers/breeding')
-const { createEgg_group } = require('./helpers/egg_group')
-const { createG_max } = require('./helpers/g_max')
-const { createPokedata } = require('./helpers/pokedata');
-const { poketype_egg, breeding, egg_group, g_max, pokedata } = require('./seedData');
+const client = require("./client");
+const { createPoketype_egg } = require("./helpers/poketype_egg");
+const { createBreeding } = require("./helpers/breeding");
+const { createEgg_group } = require("./helpers/egg_group");
+const { createG_max } = require("./helpers/g_max");
+const { createPokedata } = require("./helpers/pokedata");
+const {
+  poketype_egg,
+  breeding,
+  egg_group,
+  g_max,
+  pokedata,
+} = require("./seedData");
 
 //Drop Tables for cleanliness
 const dropTables = async () => {
@@ -15,7 +21,7 @@ const dropTables = async () => {
     await client.query(`
         DROP TABLE IF EXISTS pokedata;
         DROP TABLE IF EXISTS g_max;
-		DROP TABLE IF EXISTS egg_group;
+		DROP TABLE IF EXISTS egg_groups;
         DROP TABLE IF EXISTS poketype_egg;
         DROP TABLE IF EXISTS breeding;
         `);
@@ -29,6 +35,7 @@ const dropTables = async () => {
 //Create Tables because we need a place for the data to live
 const createTables = async () => {
   console.log("Building tables...");
+ try { 
   await client.query(`
         CREATE TABLE pokedata (
 			pokedata_id SERIAL PRIMARY KEY,
@@ -52,8 +59,9 @@ const createTables = async () => {
 					post_g_max_height varchar(255) 
 				);
 				
-				CREATE TABLE egg_group (
+				CREATE TABLE IF NOT EXISTS egg_group (
 					egg_group_id SERIAL PRIMARY KEY,
+					pokename varchar(255) UNIQUE , 
 				    egg_group varchar(255)
 				);
 				
@@ -76,6 +84,9 @@ const createTables = async () => {
 						`);
 
   console.log("Tables built!");
+} catch (error) {
+    console.error("Error creating tables:", error);
+  }
 };
 
 //Insert mock data from seedData.js
@@ -88,9 +99,7 @@ const createInitialPoketype_egg = async () => {
   } catch (error) {
     throw error;
   }
-}
-
-
+};
 
 const createInitialPokedata = async () => {
   try {
@@ -101,9 +110,7 @@ const createInitialPokedata = async () => {
   } catch (error) {
     throw error;
   }
-}
-
-
+};
 
 const createInitialG_max = async () => {
   try {
@@ -112,11 +119,9 @@ const createInitialG_max = async () => {
     for (const gmax of g_max)
       await createG_max(gmax), console.log("created g_max");
   } catch (error) {
-    throw error
+    throw error;
   }
-}
-
-
+};
 
 const createInitialEgg_group = async () => {
   try {
@@ -125,11 +130,9 @@ const createInitialEgg_group = async () => {
     for (const group of egg_group)
       await createEgg_group(group), console.log("created egg_group");
   } catch (error) {
-    throw error
+    throw error;
   }
-}
-
-
+};
 
 const createInitialBreeding = async () => {
   try {
@@ -138,34 +141,42 @@ const createInitialBreeding = async () => {
     for (const breeder of breeding)
       await createBreeding(breeder), console.log("created breeding");
   } catch (error) {
-    throw error
+    throw error;
   }
-}
-
+};
 
 //Call all my functions and 'BUILD' my database
 
 const rebuildDb = async () => {
-  try {
-    //ACTUALLY connect to my local database
-    client.connect();
-    //Run our functions
-    await dropTables();
-    await createTables();
-
-    //Generating starting data
-    console.log("starting to seed...");
-    await createInitialPoketype_egg()
-    await createInitialPokedata()
-    // await createInitialEgg_group()
-    await createInitialG_max()
-    await createInitialBreeding()
-  } catch (error) {
-    console.error(error);
-  } finally {
-    //close our connection
-    client.end();
-  }
-};
+	try {
+	  // ACTUALLY connect to my local database
+	  client.connect();
+	  // Run our functions
+	  await dropTables();
+	  await createTables();
+  
+	  // Generating starting data
+	  console.log("starting to seed...");
+	  await createInitialPoketype_egg();
+	  await createInitialPokedata();
+	  
+	  // Create the egg_group table (even if it exists)
+	  await client.query(`
+		CREATE TABLE IF NOT EXISTS egg_group (
+		  egg_group_id SERIAL PRIMARY KEY,
+		  pokename VARCHAR(255) UNIQUE,
+		  egg_group VARCHAR(255)
+		);
+	  `);
+  
+	  await createInitialG_max();
+	  await createInitialBreeding();
+	} catch (error) {
+	  console.error(error);
+	} finally {
+	  // close our connection
+	  client.end();
+	}
+  };
 
 rebuildDb();

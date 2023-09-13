@@ -7,8 +7,8 @@ const {
   deletePokedataById,
   deleteAllPokedata,
   createPokedata,
-} = require("./db/pokedata");
-const { requireUser } = require("./utils");
+} = require("../db/sql helpers/pokedata");
+const { requireUser } = require('./utils');
 
 // GET /api/pokedata
 router.get("/", async (req, res, next) => {

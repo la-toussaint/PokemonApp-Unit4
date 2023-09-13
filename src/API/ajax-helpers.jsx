@@ -1,28 +1,12 @@
-import { React, useState } from "react";
 import {
   BASE_URL_USER_ME,
-  BASE_URL_POSTS,
-  BASE_URL_POSTS1,
-  BASE_URL_POSTS2,
-  BASE_URL_POSTS3,
-  BASE_URL_POSTS4,
-  BASE_URL_USERS,
+  BASE_URL_POKEDATA,
+  BASE_URL_GMAX,
+  BASE_URL_POKE_EGG,
+  BASE_URL_EGG_GROUP,
+  BASE_URL_BREED,
   BASE_URL_DELET,
 } from "./index";
-import { useSelector } from "react-redux";
-
-import { React, useState } from "react";
-import {
-  BASE_URL_USER_ME,
-  BASE_URL_POSTS,
-  BASE_URL_POSTS1,
-  BASE_URL_POSTS2,
-  BASE_URL_POSTS3,
-  BASE_URL_POSTS4,
-  BASE_URL_USERS,
-  BASE_URL_DELET,
-} from "./index";
-import { useSelector } from "react-redux";
 
 // export default function CreatePostForm({ posts, setPosts }) {
 //   const [name, setName] = useState("");
@@ -62,9 +46,9 @@ export const fetchAllUsers = async () => {
   // update UserList with the results
 };
 
-export const fetchAllPosts = async () => {
+export const fetchAllPokedata = async () => {
   try {
-    const response = await fetch(BASE_URL_POSTS);
+    const response = await fetch(BASE_URL_POKEDATA);
     const result = await response.json();
     console.log(result.pokedata);
     return result.pokedata;
@@ -73,50 +57,50 @@ export const fetchAllPosts = async () => {
   }
 };
 
-export const fetchAllPosts1 = async () => {
-	try {
-	  const response = await fetch(BASE_URL_POSTS1);
-	  const result = await response.json();
-	  console.log(result.data.posts1);
-	  return result.data.posts1;
-	} catch (error) {
-	  console.log(error);
-	}
-  };
-  
-  export const fetchAllPosts2 = async () => {
-	try {
-	  const response = await fetch(BASE_URL_POSTS2);
-	  const result = await response.json();
-	  console.log(result.data.posts2);
-	  return result.data.posts2;
-	} catch (error) {
-	  console.log(error);
-	}
-  };
-  
-  export const fetchAllPosts3 = async () => {
-	try {
-	  const response = await fetch(BASE_URL_POSTS3);
-	  const result = await response.json();
-	  console.log(result.data.posts3);
-	  return result.data.posts3;
-	} catch (error) {
-	  console.log(error);
-	}
-  };
-  
-  export const fetchAllPosts4 = async () => {
-	try {
-	  const response = await fetch(BASE_URL_POSTS4);
-	  const result = await response.json();
-	  console.log(result.data.posts4);
-	  return result.data.posts4;
-	} catch (error) {
-	  console.log(error);
-	}
-  };
-  
+export const fetchAllGmax = async () => {
+  try {
+    const response = await fetch(BASE_URL_GMAX);
+    const result = await response.json();
+    console.log(result.g_max);
+    return result.g_max;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchAllPoke_egg = async () => {
+  try {
+    const response = await fetch(BASE_URL_POKE_EGG);
+    const result = await response.json();
+    console.log(result.poketype_egg);
+    return result.poketype_egg;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchAllEgg_group = async () => {
+  try {
+    const response = await fetch(BASE_URL_EGG_GROUP);
+    const result = await response.json();
+    console.log(result.breeding);
+    return result.breeding;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchAllBreed = async () => {
+  try {
+    const response = await fetch(BASE_URL_BREED);
+    const result = await response.json();
+    console.log(result.egg_group);
+    return result.egg_group;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const fetchProfile = async (token) => {
   try {
     const response = await fetch(BASE_URL_USER_ME, {

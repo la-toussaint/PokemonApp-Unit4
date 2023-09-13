@@ -1,10 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from 'react-dom/client';
 import App from "./App.jsx";
 import { Provider } from "react-redux";
 import "./index.css";
 import { configureStore } from "@reduxjs/toolkit";
-import { authReducer } from "./redux";
+import { authReducer } from "./components/redux/index";
 import { BrowserRouter } from "react-router-dom";
 
 export const store = configureStore({

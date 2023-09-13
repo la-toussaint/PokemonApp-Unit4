@@ -2,19 +2,18 @@ import React from "react";
 import Authenticate from "./components/SignUp-RegComps/Authenticate";
 import SignUpForm from "./components/SignUp-RegComps/SignUpForm";
 import VerificationPage from "./components/LogInComps/Verification";
-import { Messages } from "./components/Messages";
-import NewPost from "./components/NewPost";
+import NavBar from "./components/navbar";
 import AllCards from "./components/AllCards";
+import { Messages } from "./components/Messages";
+import { fetchProfile } from "./API/ajax-helpers";
+import { setProfile } from "./components/redux/index"
+import { Routes, Route } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import NewPost from "./components/NewPost";
 import SingleProfile from "./components/SingleProfile";
 // @reduxjs/toolkit
 import "./index.css";
-import { Routes, Route } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchProfile } from "./API/ajax-helpers";
-import NavBar from "./components/Navbar";
-import { setProfile } from "./redux";
-
-
+;
 
 export default function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);

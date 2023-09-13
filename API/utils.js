@@ -1,4 +1,4 @@
-const client = require("../db/helpers/client");
+const client = require("../db/client");
 
 function requireUser(req, res, next) {
   if (!req.user) {
@@ -54,47 +54,47 @@ const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {
 };
 
 // calculate total price of rental by taking the bike id, rental dates, and price per day
-async function calculateRentalPrice(bike_id, rental_date_from, rental_date_to) {
-  try {
-    // get bike price per day
-    const {
-      rows: [bike],
-    } = await client.query(
-      `
-      SELECT price
-      FROM bikes
-      WHERE id=$1
-    `,
-      [bike_id]
-    );
+// async function calculateRentalPrice(bike_id, rental_date_from, rental_date_to) {
+//   try {
+//     // get bike price per day
+//     const {
+//       rows: [bike],
+//     } = await client.query(
+//       `
+//       SELECT price
+//       FROM bikes
+//       WHERE id=$1
+//     `,
+//       [bike_id]
+//     );
 
-    const price_per_day = bike.price;
-    const from = new Date(rental_date_from);
-    const to = new Date(rental_date_to);
-    const days = Math.ceil((to - from) / (1000 * 60 * 60 * 24));
+//     const price_per_day = bike.price;
+//     const from = new Date(rental_date_from);
+//     const to = new Date(rental_date_to);
+//     const days = Math.ceil((to - from) / (1000 * 60 * 60 * 24));
 
-    return price_per_day * days;
-  } catch (error) {
-    throw error;
-  }
-}
+//     return price_per_day * days;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 
 // check if a bike is already rented on a given date
-async function checkRentalExists(bike_id, rental_date_from) {
+async function checkPokemonExists(pokedata_id, pokename) {
   try {
     const {
-      rows: [rented],
+      rows: [pokedata],
     } = await client.query(
       `
       SELECT *
-      FROM rentals
-      WHERE bike_id=$1
-      AND rental_date_from=$2
+      FROM pokedata
+      WHERE pokedata_id=$1
+      AND pokename=$2
     `,
       [bike_id, rental_date_from]
     );
 
-    return rented;
+    return pokedata;
   } catch (error) {
     throw error;
   }
@@ -103,6 +103,5 @@ async function checkRentalExists(bike_id, rental_date_from) {
 module.exports = {
   requireUser,
   requiredNotSent,
-  calculateRentalPrice,
-  checkRentalExists,
+  checkPokemonExists,
 };

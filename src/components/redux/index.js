@@ -1,21 +1,30 @@
-import React from "react";
-import { Snackbar, Alert } from "@mui/material";
+import { createSlice } from "@reduxjs/toolkit";
 
-export const Messages = ({ message = null, onClose }) => {
-  const [open, setOpen] = React.useState(Boolean(message));
-  const handleClose = () => {
-    setOpen(false);
-    onClose(null);
-  };
-  return (
-    <Snackbar
-      open={Boolean(message)}
-      autoHideDuration={12000}
-      onClose={handleClose}
-    >
-      <Alert severity={message.type} onClose={handleClose}>
-        {message.text}
-      </Alert>
-    </Snackbar>
-  );
-};
+export const authReducer = createSlice({
+  name: "auth",
+  initialState: {
+    token: null,
+    isLoggedIn: false,
+    profile: null,
+  },
+  reducers: {
+    setToken: (state, action) => ({
+      ...state,
+      token: action.payload,
+      isLoggedIn: Boolean(action.payload),
+    }),
+    setProfile: (state, action) => ({
+      ...state,
+      profile: action.payload,
+    }),
+    deletePostFromProfile: (state, action) => ({
+      ...state,
+      profile: {
+        ...profile,
+        posts: posts.filter((post) => post._id !== action.payload),
+      },
+    }),
+  },
+});
+
+export const { setToken, setProfile, deletePostFromProfile } = authReducer.actions;

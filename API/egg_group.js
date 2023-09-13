@@ -7,8 +7,8 @@ const {
   deleteEgg_groupById,
   deleteAllEgg_group,
   createEgg_group,
-} = require("./db/egg_group");
-const { requireUser } = require("./utils");
+} = require("../db/sql helpers/egg_group");
+const { requireUser } = require('./utils');
 
 // GET /api/egg_group
 router.get("/", async (req, res, next) => {

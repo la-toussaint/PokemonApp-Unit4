@@ -1,7 +1,7 @@
 const client = require("../client");
 const { egg_group } = require("../seedData");
 
-const createEgg_group = async ({ egg_group }) => {
+const createEgg_group = async ({ pokename, egg_group }) => {
   try {
     const {
       rows: [egg_group],
@@ -11,12 +11,12 @@ const createEgg_group = async ({ egg_group }) => {
       // VALUES(var1, var2, var3)
       // RETURNING everything
       `
-                INSERT INTO egg_group(egg_group)
-                VALUES($1)
+                INSERT INTO egg_group(pokename, egg_group)
+                VALUES($1, $2)
                 RETURNING *;
             `
       //Kind of like a dependency array, hooks up the parameters to the dolla dolla variables
-   [egg_group] );
+   [pokename, egg_group] );
     return egg_group;
   } catch (error) {
     throw error;

@@ -1,4 +1,4 @@
-const client = require("../client");
+const client = require("..db/client");
 const bcrypt = require("bcrypt");
 const SALT_COUNT = 10;
 
@@ -10,9 +10,8 @@ async function createUser({ name, username, password }) {
       rows: [user],
     } = await client.query(
       `
-      INSERT INTO users(name, username, password)
-      VALUES ($1, $2, $3)
-      ON CONFLICT (username) DO NOTHING
+      INSERT INTO users(username, password)
+      VALUES ($1, $2)
       RETURNING *;
     `,
       [name, username, hashedPassword]

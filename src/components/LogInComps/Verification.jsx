@@ -7,10 +7,11 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { BASE_URL_LOGIN } from "../../API";
+// import { BASE_URL_LOGIN } from "./src/API/index";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../redux";
+import { setToken } from "../redux/index";
+
 const VerificationPage = ({ setMessage }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const VerificationPage = ({ setMessage }) => {
   const loginUser = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(BASE_URL_LOGIN, {
+      const response = await fetch(`http://localhost:8080/api/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
