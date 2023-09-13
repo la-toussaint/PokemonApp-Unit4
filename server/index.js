@@ -1,4 +1,3 @@
-
 const express = require('express');
 const app = express();
 const PORT = 8080;
@@ -20,7 +19,7 @@ app.get('/', (req, res) => {
 });
 
 // Router: /api
-app.use('/api', require('../api/index'));
+app.use('/api', require('./api/index'));
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);

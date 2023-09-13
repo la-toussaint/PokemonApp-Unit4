@@ -8,8 +8,8 @@ const { Client } = require('pg')
 
 
 //Establishing connect to database (like how we do with http://)
-const server = 'pokedex'
-const client = new Client(`postgres://localhost:5432/${server}`)
+const server = 'keirankozlowski'
+const client = new Client(`postgres://localhost:54321/${server}`)
 
 
 
