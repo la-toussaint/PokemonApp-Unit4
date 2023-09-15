@@ -6,10 +6,10 @@ const { Client } = require('pg')
 // const cors = require('cors')
 // app.use(cors());
 
-
+const bcrypt = 'bcrypt'
 //Establishing connect to database (like how we do with http://)
-const server = 'keirankozlowski'
-const client = new Client(`postgres://localhost:54321/${server}`)
+const server = 'pokedex'
+const client = new Client(`postgres://localhost:5432/${server}`)
 
 
 

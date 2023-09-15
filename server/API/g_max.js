@@ -7,7 +7,7 @@ const {
   deleteG_maxById,
   deleteAllG_max,
   createG_max,
-} = require("../db/g_max");
+} = require("../db/sql helpers/g_max");
 const { requireUser } = require("./utils");
 
 // GET /api/g_max

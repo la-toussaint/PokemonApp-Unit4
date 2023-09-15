@@ -367,7 +367,7 @@ const g_max = [
     pokename: "Charizard",
     g_max_move_type: "Fire",
     b4g_max_image:
-      "https://archives.bulbagarden.net/media/upload/thumb/3/38/0006Charizard.png/100px-0006Charizard.png",
+      "https://archives.bulbagarden.net/media/upload/3/38/0006Charizard.png",
     post_g_max_image:
       "https://m.bulbapedia.bulbagarden.net/wiki/File:0006Charizard-Gigantamax.png",
     post_g_max_height: 28,
@@ -456,8 +456,7 @@ const g_max = [
     g_max_move: "Foam Burst",
     pokename: "Kingler",
     g_max_move_type: "Water",
-    b4g_max_image:
-      "https://img.pokemondb.net/sprites/home/normal/kingler.png",
+    b4g_max_image: "https://img.pokemondb.net/sprites/home/normal/kingler.png",
     post_g_max_image:
       "https://img.pokemondb.net/sprites/home/normal/kingler-gigantamax.png",
     post_g_max_height: 19,
@@ -478,16 +477,14 @@ const g_max = [
     g_max_move_type: "Normal",
     post_g_max_image:
       "https://archives.bulbagarden.net/media/upload/e/e2/0133Eevee-Gigantamax.png",
-    b4g_max_image:
-      "https://bulbapedia.bulbagarden.net/wiki/File:0133Eevee.png",
+    b4g_max_image: "https://bulbapedia.bulbagarden.net/wiki/File:0133Eevee.png",
     post_g_max_height: 18,
   },
   {
     g_max_move: "Replenish",
     pokename: "Snorlax",
     g_max_move_type: "Normal",
-    b4g_max_image:
-      "https://img.pokemondb.net/sprites/home/normal/snorlax.png",
+    b4g_max_image: "https://img.pokemondb.net/sprites/home/normal/snorlax.png",
     post_g_max_image:
       "https://img.pokemondb.net/sprites/home/normal/snorlax-gigantamax.png",
     post_g_max_height: 35,
@@ -496,10 +493,9 @@ const g_max = [
     g_max_move: "Malodor",
     pokename: "Garbodor",
     g_max_move_type: "Poison",
-    b4g_max_image:
-      '<img src=<img src="https://img.pokemondb.net/sprites/home/shiny/garbodor.png" alt="Garbodor"/>',
+    b4g_max_image: "https://img.pokemondb.net/sprites/home/shiny/garbodor.png",
     post_g_max_image:
-      '<img src=<img src="https://img.pokemondb.net/sprites/home/shiny/garbodor-gigantamax.png" alt="Garbodor"/>',
+      "https://img.pokemondb.net/sprites/home/shiny/garbodor-gigantamax.png",
     post_g_max_height: 21,
   },
   {
@@ -586,8 +582,7 @@ const g_max = [
     g_max_move: "Tartness",
     pokename: "Flapple",
     g_max_move_type: "Grass",
-    b4g_max_image:
-      "https://img.pokemondb.net/sprites/home/shiny/flapple.png",
+    b4g_max_image: "https://img.pokemondb.net/sprites/home/shiny/flapple.png",
     post_g_max_image:
       "https://img.pokemondb.net/sprites/home/shiny/flapple-gigantamax.png",
     post_g_max_height: 17,
@@ -694,7 +689,7 @@ const g_max = [
   },
 ];
 //egg types
-const egg_groups = [
+const egg_group = [
   { pokename: "Gengar", egg_group: "Amorphous" },
   { pokename: "Butterfree", egg_group: "Bug" },
   { pokename: "Bagon", egg_group: "Dragon" },
@@ -995,6 +990,36 @@ const breeding = [
   },
 ];
 
+const users = [
+  {
+    name: "Lauren",
+    username: "lolomayne",
+    password: "password",
+    fav_pokemon: "Alcremie",
+  },
+
+  {
+    name: "Bruno",
+    username: "bruno",
+    password: "iamcool",
+    fav_pokemon: "Lillipup",
+  },
+
+  {
+    name: "Winston",
+    username: "winston",
+    password: "iluvpoke",
+    fav_pokemon: "Gengar",
+  },
+
+  {
+    name: "Alden",
+    username: "alden",
+    password: "iluvbro",
+    fav_pokemon: "Minun",
+  },
+];
+
 //pokemon
 
-module.exports = { pokedata, g_max, egg_groups, poketype_egg, breeding };
+module.exports = { pokedata, g_max, egg_group, poketype_egg, breeding, users };

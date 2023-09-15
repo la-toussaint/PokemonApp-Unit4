@@ -1,5 +1,5 @@
-const client = require("../db/client");
-const util = require("../db/util");
+const client = require("../client");
+const util = require("../util");
 
 async function getAllPokedata() {
   try {
@@ -7,6 +7,7 @@ async function getAllPokedata() {
         SELECT *
         FROM pokedata;
         `);
+    console.log("getAllPokedata rows: ", rows);
     return rows;
   } catch (error) {
     throw error;

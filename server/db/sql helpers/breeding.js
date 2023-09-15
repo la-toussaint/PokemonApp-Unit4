@@ -1,5 +1,5 @@
-const client = require("../db/client");
-const util = require("../db/util");
+const client = require("../client");
+const util = require("../util");
 
 async function getAllBreeding() {
   try {
@@ -45,7 +45,7 @@ async function createBreedingData({
       rows: [breeding],
     } = await client.query(
       `
-        INSERT INTO breeding(pokename, egg_group1, egg_group2, gender, comp_parent)
+        INSERT INTO breeding(breeding_id, pokename, egg_group1, egg_group2, gender, comp_parent)
         VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING *;
         `,

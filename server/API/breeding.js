@@ -1,7 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const { getAllBreeding, getBreedingById, updateBreedingById, deleteBreedingById, deleteAllBreeding, createBreeding } = require('../db/breeding');
-const { requireUser } = require("./utils");
+const {
+  getAllBreeding,
+  getBreedingById,
+  updateBreedingById,
+  deleteBreedingById,
+  deleteAllBreeding,
+  createBreeding,
+} = require("../db/sql helpers/breeding");
+const { requireUser } = require('./utils');
 
 // GET /api/breeding
 router.get("/", async (req, res, next) => {
@@ -11,7 +18,7 @@ router.get("/", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 // GET /api/breeding/:breedingId
 router.get("/:breedingId", async (req, res, next) => {
@@ -21,7 +28,7 @@ router.get("/:breedingId", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 router.post("/", async (req, res, next) => {
   try {
@@ -30,7 +37,7 @@ router.post("/", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-})
+});
 
 // PATCH /api/breeding/:breedingId
 router.patch("/:breedingId", requireUser, async (req, res, next) => {
@@ -40,7 +47,7 @@ router.patch("/:breedingId", requireUser, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 // DELETE /api/breeding/:breedingId
 router.delete("/:breedingId", requireUser, async (req, res, next) => {
@@ -50,7 +57,7 @@ router.delete("/:breedingId", requireUser, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 // DELETE /api/breeding
 router.delete("/", requireUser, async (req, res, next) => {
@@ -60,7 +67,7 @@ router.delete("/", requireUser, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 // export router
 module.exports = router;

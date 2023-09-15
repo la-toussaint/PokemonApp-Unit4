@@ -1,5 +1,5 @@
-const client = require("../db/client");
-const util = require("../db/util");
+const client = require("../client");
+const util = require("../util");
 
 async function getAllG_max() {
   try {
@@ -7,6 +7,7 @@ async function getAllG_max() {
         SELECT *
         FROM g_max;
         `);
+    console.log("rows: ", rows);
     return rows;
   } catch (error) {
     throw error;

@@ -1,14 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function UserListName({ user }) {
+export default function UserListName({ user_id }) {
   const navigate = useNavigate();
   return (
     <div>
       <h3>{user.name}</h3>
       <button class="userId"
         onClick={() => {
-          navigate(`/${user.id}`);
+          navigate(`/${user_id}`);
         }}
       >
         See Details

@@ -2,7 +2,7 @@ import { react, useState } from "react";
 import { setToken } from "../redux/index";
 
 const BASE_URL = `http://localhost:8080`;
-export const BASE_URL_USER_REG = `${BASE_URL}/users/register`;
+export const BASE_URL_USER_REG = `${BASE_URL}/api/users/register`;
 
 export default function SignUpForm({ setToken }) {
   const [username, setUsername] = useState("");
@@ -58,7 +58,7 @@ export default function SignUpForm({ setToken }) {
           <br />
         </label>
         <br />
-        <button type="submit">Submit</button>
+        <button className="signup-click" type="submit">Submit</button>
       </form>
       {!(username.length >= 8) && (
         <p style={{ color: "white", backgroundColor: "#0072b5" }}>

@@ -1,5 +1,5 @@
-const client = require("../db/client");
-const util = require("../db/util");
+const client = require("../client");
+const util = require("../util");
 
 // database functions
 // get all poketype_egg

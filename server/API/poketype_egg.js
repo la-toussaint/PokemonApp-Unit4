@@ -1,9 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-const {getAllPoketype_egg,getPoketype_eggById, updatePoketype_eggById, deletePoketype_eggById, deleteAllPoketype_egg,
-  createPoketype_egg } = require('../db/poketype_egg');
-const { requireUser } = require("./utils");
+const {
+  getAllPoketype_egg,
+  getPoketype_eggById,
+  updatePoketype_eggById,
+  deletePoketype_eggById,
+  deleteAllPoketype_egg,
+  createPoketype_egg,
+} = require("../db/sql helpers/poketype_egg");
+
+const { requireUser } = require('./utils');
 
 // GET /api/poketype_egg
 router.get("/", async (req, res, next) => {
@@ -13,7 +20,7 @@ router.get("/", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 // GET /api/poketype_egg/:poketype_eggId
 router.get("/:poketype_eggId", async (req, res, next) => {
@@ -23,7 +30,7 @@ router.get("/:poketype_eggId", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 router.post("/", async (req, res, next) => {
   try {
@@ -32,7 +39,7 @@ router.post("/", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-})
+});
 
 // PATCH /api/poketype_egg/:poketype_eggId
 router.patch("/:poketype_eggId", requireUser, async (req, res, next) => {
@@ -45,7 +52,7 @@ router.patch("/:poketype_eggId", requireUser, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 // DELETE /api/poketype_egg/:poketype_eggId
 router.delete("/:poketype_eggId", requireUser, async (req, res, next) => {
@@ -57,7 +64,7 @@ router.delete("/:poketype_eggId", requireUser, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 // DELETE /api/poketype_egg
 router.delete("/", requireUser, async (req, res, next) => {

@@ -1,5 +1,6 @@
 import {
-  BASE_URL_USER_ME,
+  BASE_URL_USERS_ME,
+ BASE_URL_USERS, 
   BASE_URL_POKEDATA,
   BASE_URL_GMAX,
   BASE_URL_POKE_EGG,
@@ -8,37 +9,16 @@ import {
   BASE_URL_DELET,
 } from "./index";
 
-// export default function CreatePostForm({ posts, setPosts }) {
-//   const [name, setName] = useState("");
-//   const [breed, setBreed] = useState("");
-//   const [error, setError] = useState(null);
 
-//   async function handleSubmit(e) {
-//     e.preventDefault();
-//     const APIData = await createPost(name, breed);
-//     if (APIData.success) {
-//       console.log("New Post: ", APIData.data.newPost);
-
-//       // Resetting all posts manually
-//       const newPostsList = [...posts, APIData.data.newPost];
-//       setPosts(newPostsList);
-
-//       setName("");
-//       setBreed("");
-//     } else {
-//       setError(APIData.error.message);
-//     }
-//   }
-// }
 
 export const fetchAllUsers = async () => {
   try {
     // write a fetch request for:
     // https://fsa-puppy-bowl.herokuapp.com/api/users
-    const response = await fetch(BASE_URL_USERS);
+    const response = await fetch(`http://localhost:8080/api/users`);
     const result = await response.json();
 
-    return result.data.users;
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -48,10 +28,9 @@ export const fetchAllUsers = async () => {
 
 export const fetchAllPokedata = async () => {
   try {
-    const response = await fetch(BASE_URL_POKEDATA);
+    const response = await fetch(`http://localhost:8080/api/pokedata`);
     const result = await response.json();
-    console.log(result.pokedata);
-    return result.pokedata;
+    return result;
   } catch (error) {
     console.log(error);
   }
@@ -59,10 +38,9 @@ export const fetchAllPokedata = async () => {
 
 export const fetchAllGmax = async () => {
   try {
-    const response = await fetch(BASE_URL_GMAX);
+    const response = await fetch(`http://localhost:8080/api/g_max`);
     const result = await response.json();
-    console.log(result.g_max);
-    return result.g_max;
+    return result;
   } catch (error) {
     console.log(error);
   }
@@ -70,10 +48,10 @@ export const fetchAllGmax = async () => {
 
 export const fetchAllPoke_egg = async () => {
   try {
-    const response = await fetch(BASE_URL_POKE_EGG);
+    const response = await fetch(`http://localhost:8080/api/poketype_egg`);
     const result = await response.json();
     console.log(result.poketype_egg);
-    return result.poketype_egg;
+    return result;
   } catch (error) {
     console.log(error);
   }
@@ -81,10 +59,9 @@ export const fetchAllPoke_egg = async () => {
 
 export const fetchAllEgg_group = async () => {
   try {
-    const response = await fetch(BASE_URL_EGG_GROUP);
+    const response = await fetch(`http://localhost:8080/api/egg_group`);
     const result = await response.json();
-    console.log(result.breeding);
-    return result.breeding;
+    return result;
   } catch (error) {
     console.log(error);
   }
@@ -92,10 +69,9 @@ export const fetchAllEgg_group = async () => {
 
 export const fetchAllBreed = async () => {
   try {
-    const response = await fetch(BASE_URL_BREED);
+    const response = await fetch(`http://localhost:8080/api/breeding`);
     const result = await response.json();
-    console.log(result.egg_group);
-    return result.egg_group;
+    return result;
   } catch (error) {
     console.log(error);
   }
@@ -103,7 +79,7 @@ export const fetchAllBreed = async () => {
 
 export const fetchProfile = async (token) => {
   try {
-    const response = await fetch(BASE_URL_USER_ME, {
+    const response = await fetch(`http://localhost:8080/api/users/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -111,15 +87,15 @@ export const fetchProfile = async (token) => {
       },
     });
     const result = await response.json();
-    return result.data;
+    return result;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const deletePost = async (token, _id) => {
+export const deletePost = async (token, pokedata_id) => {
   try {
-    const response = await fetch(`${BASE_URL_POSTS}/${_id}`, {
+    const response = await fetch(`${`http://localhost:8080/api/posts`}/${pokedata_id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -134,18 +110,20 @@ export const deletePost = async (token, _id) => {
   }
 };
 
-function RenderSelectedUser({ pickMyId, myId }) {
-  const fetchSingleUser = async (id) => {
+function RenderSelectedUser({ user_id }) {
+  const fetchSingleUser = async (user_id) => {
     try {
-      const response = await fetch(`BASE_URL_USERS_ME`);
+      const response = await fetch(`http://localhost:8080/api/users/me`);
       const user = await response.json();
       const userCard = document.createCard("div");
       userCard.classList.add("user");
       userCard.innerHTML = `
             <h4>${user.name}</h4>
+            <p>${user.user_id}</p>
             <p>${user.username}</p>
-            <p>${user.password}</p>
-            <p>${user.token}</p>
+			<p>${user.password}</p>
+            <p>${user.fav_pokemon}</p>
+			<p>${user.token}</p>
             ${user.posts}</p>
 
         `;
@@ -179,7 +157,11 @@ function RenderSelectedUser({ pickMyId, myId }) {
         <b>Username: </b>
         {user.username}
       </p>
-      <p>
+	  <p>
+        <b>Favorite Pokémon: </b>
+        {user.fav_pokemon}
+      </p>
+	  <p>
         <b>Posts: </b>
         {user.post}
       </p>
@@ -187,7 +169,7 @@ function RenderSelectedUser({ pickMyId, myId }) {
   );
 }
 
-export async function makePost(token, title, description, price, willDeliver) {
+export async function makePost(token, national_num, pokename, poketype1, poketype2, pokespecies, height, weight, sign_ability) {
   try {
     const response = await fetch(BASE_URL_POSTS, {
       method: "POST",
@@ -197,11 +179,7 @@ export async function makePost(token, title, description, price, willDeliver) {
       },
       body: JSON.stringify({
         post: {
-          title: title,
-          description: description,
-          price: price,
-          willDeliver: willDeliver,
-        },
+			national_num, pokename, poketype1, poketype2, pokespecies, height, weight, sign_ability},
       }),
     });
     const result = await response.json();

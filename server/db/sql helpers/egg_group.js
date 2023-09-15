@@ -1,5 +1,6 @@
-const client = require("../db/client");
-const util = require("../db/util");
+const client = require("../client");
+const util = require("../util");
+const { egg_group } = require("../seedData");
 
 async function getAllEgg_group() {
   try {
@@ -17,44 +18,47 @@ async function getAllEgg_group() {
 async function getEgg_groupById(egg_group_id) {
   try {
     const {
-      rows: [egg_group],
+      rows: [group],
     } = await client.query(`
 			SELECT *
-			FROM egg_group
+			FROM group
 			WHERE egg_group_id =${egg_group_id};
 			`);
-    return egg_group;
+    return group;
   } catch (error) {
     throw error;
   }
 }
 
 // create new egg_group
-async function createEgg_groupData({ pokename, egg_group }) {
-  try {
-    const {
-      rows: [egg_group],
-    } = await client.query(`
-        INSERT INTO egg_group(pokename, egg_group)
-		VALUES($1, $2)
-        RETURNING *;
-		`);
-    return egg_group;
-  } catch (error) {
-    throw error;
-  }
-}
+// async function createEgg_groupData({ pokename, egg_group }) {
+//   try {
+//     const {
+//       rows: [egg_group],
+//     } = await client.query(`
+//         INSERT INTO egg_group(pokename, egg_group)
+// 		VALUES($1, $2)
+//         RETURNING *;
+// 		`);
+//     return egg_group;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 
 // add new egg_group
 async function createEgg_group({ pokename, egg_group }) {
   try {
     const {
-      rows: [egg_group],
-    } = await client.query(`
+      rows: [group],
+    } = await client.query(
+      `
         INSERT INTO egg_group(pokename, egg_group)
-        VALUES($1)
+        VALUES($1, $2)
         RETURNING *;
-        `);
+        `,
+      [pokename, egg_group]
+    );
     return egg_group;
   } catch (error) {
     throw error;
@@ -75,17 +79,17 @@ async function updateEgg_groupById(egg_group_id, fields = {}) {
 
   try {
     const {
-      rows: [egg_group],
+      rows: [group],
     } = await client.query(
       `
-        UPDATE egg_group
+        UPDATE group
         SET ${setString}
         WHERE id=${egg_group_id}
         RETURNING *;
         `,
       Object.values(fields)
     );
-    return egg_group;
+    return group;
   } catch (error) {
     throw error;
   }
@@ -95,13 +99,13 @@ async function updateEgg_groupById(egg_group_id, fields = {}) {
 async function deleteEgg_groupById(egg_group_id) {
   try {
     const {
-      rows: [egg_group],
+      rows: [group],
     } = await client.query(`
-        DELETE FROM egg_group
+        DELETE FROM group
         WHERE egg_group_id =${egg_group_id};
         RETURNING *;
         `);
-    return egg_group;
+    return group;
   } catch (error) {
     throw error;
   }
@@ -124,7 +128,7 @@ module.exports = {
   getAllEgg_group,
   getEgg_groupById,
   createEgg_group,
-  createEgg_groupData,
+  //   createEgg_groupData,
   updateEgg_groupById,
   deleteEgg_groupById,
   deleteAllEgg_group,

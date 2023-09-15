@@ -21,7 +21,7 @@ export const authReducer = createSlice({
       ...state,
       profile: {
         ...profile,
-        posts: posts.filter((post) => post._id !== action.payload),
+        posts: posts.filter((post) => post.pokedata_id !== action.payload),
       },
     }),
   },

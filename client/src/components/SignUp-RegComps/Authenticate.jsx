@@ -7,7 +7,7 @@ export default function Authenticate({ token }) {
 
   async function handleClick() {
     try {
-      const response = await fetch(BASE_URL_USER_ME,
+      const response = await fetch(BASE_URL_USERS_ME,
         {
           method: "GET",
           headers: {

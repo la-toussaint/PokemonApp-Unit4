@@ -4,4 +4,5 @@ module.exports = {
   ...require("./sql helpers/g_max"),
   ...require("./sql helpers/pokedata"),
   ...require("./sql helpers/poketype_egg"),
+  ...require("./sql helpers/users"),
 };

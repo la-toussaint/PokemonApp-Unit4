@@ -22,25 +22,37 @@ const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   React.useEffect(() => {
     console.log("isLoggedIn", isLoggedIn);
     if (isLoggedIn) {
-      fetchProfile(token).then((data) => {
+      RenderSelectedUser(token).then((data) => {
         console.log("foo", data);
         dispatch(setProfile(data));
       });
     }
   }, [isLoggedIn]);
 
-	const renderImages = () => {
-		return imageUrls.map((imageUrl, index) => (
-		  <img key={index} src={imageUrl} alt={`Image ${index}`} />
-		));
-	  };
+  const renderImages = () => {
+    checkIfCrossoriginMeAvailable()
+      .then((crossoriginMeAvailable) => {
+        return imageUrls.map((imageUrl) => (
+          <img
+            src={
+              crossoriginMeAvailable
+                ? `https://crossorigin.me/${imageUrl}`
+                : `https://cors-anywhere.herokuapp.com/${imageUrl}`
+            }
+          />
+        ));
+      })
+      .catch((error) => {
+        console.error("Error checking crossorigin.me availability:", error);
+      });
+  };
  
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  const handlePostDelete = (id) => {
-    deletePost(token, id);
+  const handlePostDelete = (pokedata_id) => {
+    deletePost(token, pokedata_id);
     deletePostFromProfile(id);
   };
 
@@ -57,7 +69,7 @@ const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
         {isOpen && (
           <ul className="profile-log-list">
             {profile?.posts?.map((post) => (
-              <li className="profile-log-item" key={post.post}>
+              <li className="profile-log-item" key={post.pokename}>
                 Pokémon National Id: {post.national_num}, Pokémon Name:{" "}
                 {post.pokename}, Pokémon Type 1: {post.poketype1}, Pokémon Type
                 2: {post.poketype2}, Pokémon Species: {post.pokespecies},
