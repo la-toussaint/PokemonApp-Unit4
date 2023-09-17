@@ -100,7 +100,6 @@ export default function NewPostForm() {
           <label>
 		  Pokémon Signature Ability:{" "}
             <input
-              type="checkbox"
               value={postSign_ability}
               onChange={(e) => {
                 setPostSign_ability("");

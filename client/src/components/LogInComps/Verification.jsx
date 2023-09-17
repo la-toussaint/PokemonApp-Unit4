@@ -23,14 +23,14 @@ const VerificationPage = ({ message, setMessage }) => {
     padding: 20,
     height: "70vh",
     width: 280,
-    margin: "20px auto",
-  };
+  margin: "50px auto",
+};
   const btnstyle = { margin: "8px 0" };
 
   const loginUser = async (e) => {
     e.preventDefault();
     try {
-      const login = await fetch(`http://localhost:8080/api/users/login`, {
+      const login = await fetch(`http://localhost:8080/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,13 +45,14 @@ const VerificationPage = ({ message, setMessage }) => {
           },
         }),
       });
+      console.log("login: ", login);
       const token = jwt.sign(user, JWT_SECRET);
-
-      res.cookie("token", token, {
-        sameSite: "strict",
-        httpOnly: true,
-        signed: true,
-      });
+      console.log("token: ", token);
+      // res.cookie("token", token, {
+      //   sameSite: "strict",
+      //   httpOnly: true,
+      //   signed: true,
+      // });
 
       dispatch(setToken(token));
       setMessage({ text: message, type: "success" });
@@ -64,7 +65,7 @@ const VerificationPage = ({ message, setMessage }) => {
   return (
     <Grid>
       <Paper className="login-paper" elevation={10} style={paperStyle}>
-        <Grid className="login-grid"   align="center">
+        <Grid className="login-grid" align="center">
           <h2>Sign In</h2>
         </Grid>
         <TextField
@@ -100,7 +101,8 @@ const VerificationPage = ({ message, setMessage }) => {
           value={fav_pokemon}
           onChange={(e) => setFav_pokemon(e.target.value)}
         />
-        <Button className="login-click"
+        <Button
+          className="login-click"
           type="submit"
           color="primary"
           variant="contained"

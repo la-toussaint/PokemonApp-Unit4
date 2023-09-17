@@ -21,13 +21,13 @@ async function createUsers({ name, username, password, fav_pokemon }) {
     throw error;
   }
 }
-async function getUser({ username, password }) {
+async function getUsers({ username, password }) {
   if (!username || !password) {
     return;
   }
 
   try {
-    const user = await getUserByUsername(username);
+    const user = await getUsersByUsername(username);
     if (!user) return;
     const hashedPassword = user.password;
     const passwordsMatch = await bcrypt.compare(password, hashedPassword);
@@ -39,7 +39,7 @@ async function getUser({ username, password }) {
   }
 }
 
-async function getUserById(user_id) {
+async function getUsersById(user_id) {
   // first get the user
   try {
     const {
@@ -49,8 +49,7 @@ async function getUserById(user_id) {
       SELECT *
       FROM users
 	  WHERE user_id =${user_id};
-    `,
-     
+    `
     );
     // if it doesn't exist, return null
     if (!user) return null;
@@ -62,16 +61,15 @@ async function getUserById(user_id) {
     throw error;
   }
 }
-async function getUserByUsername(username) {
+async function getUsersByUsername(username) {
   // first get the user
   try {
     const { user } = await client.query(
       `
       SELECT *
-      FROM user
-      WHERE username = $2;
-    `,
-      [name, username, hashedPassword, fav_pokemon]
+      FROM users
+      WHERE username =${username};
+    `
     );
     // if it doesn't exist, return null
     if (!user || !row.length) return null;
@@ -86,7 +84,7 @@ async function getUserByUsername(username) {
 }
 module.exports = {
   createUsers,
-  getUser,
-  getUserById,
-  getUserByUsername,
+  getUsers,
+  getUsersById,
+  getUsersByUsername,
 };
