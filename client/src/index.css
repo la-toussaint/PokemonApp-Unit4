@@ -31,23 +31,23 @@
   
   .post-card-container {
 	display: grid;
-	grid-template-columns: auto auto auto auto;
+	grid-template-columns: auto auto auto;
 	flex-direction: column;
-	padding-top: 75px;
+	margin-top: 75px;
 	justify-content: space-evenly;
 	max-width: 100%;
   }
   
-  .search-bar-form {
+  .search-bar {
   position: absolute;
-  display: inline;
-  padding-top: 5px;
-  margin-top: 35px;
+  display: grid;
+  background-color: gold;
+  margin-top: 0px;
+  padding-bottom: 15px;
   margin-left: 50px;
-  width: 900px;
+  width: 1000px;
   height: 25px;
   border-radius: 10px;
-  background-color: linen;
   border: 3px solid midnightblue;
   }
   
@@ -58,19 +58,18 @@
 	background-color: #0072b5;
 	opacity: 0.95;
 	border: 3px solid midnightblue;
-	margin-left: 35px;
-	padding-left: 15px;
+	margin-top: 150px;
 	font: timesnewroman;
 	font-size: 12pt;
 	line-height: 20pt;
 	color: antiquewhite;
 	width: 250px;
-	height: 400px;
+	height: 450px;
 	word-wrap: break-word;
-	padding: 25px;
+	padding: 35px;
 	border-radius: 10px;
 	margin: 10px 10px;
-	overflow-y: scroll;
+	
   }
   
   
@@ -209,9 +208,9 @@
   
   
   .sign-up-form {
+	display: inline-table;
 	width: 300 px;
 	height: 400 px; 
-	display: inline-table;
 	justify-content: stretch;
 	opacity: 0.95;
 	border: 4px solid midnightblue;
@@ -226,7 +225,27 @@
 	flex-wrap: wrap;
 	padding: 25px;
 	border-radius: 10px;
-	overflow-y: scroll;
+	
+  }
+  
+  .sign-up-error {
+	display: inline-flex;
+	justify-content: stretch;
+	opacity: 0.95;
+	border: 4px solid midnightblue;
+	background-color:#0072b5;
+	margin-left: 10%;
+	margin-top: 50px;
+	font: timesnewroman;
+	font-size: 12pt;
+	font-weight: bolder;
+	line-height: 30pt;
+	color: antiquewhite;
+	flex-wrap: wrap;
+	padding: 25px;
+	border-radius: 10px;
+	
+	
   }
   
   .signup-click {

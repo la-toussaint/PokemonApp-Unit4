@@ -40,7 +40,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // PATCH /api/pokedata/:pokedataId
-router.patch("/:pokedataId", requireUser, async (req, res, next) => {
+router.patch("/:pokedataId",  async (req, res, next) => {
   try {
     const pokedata = await updatePokedataById(req.params.pokedataId, req.body);
     res.send(pokedata);
@@ -50,7 +50,7 @@ router.patch("/:pokedataId", requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/pokedata/:pokedataId
-router.delete("/:pokedataId", requireUser, async (req, res, next) => {
+router.delete("/:pokedataId", async (req, res, next) => {
   try {
     const pokedata = await deletePokedataById(req.params.pokedataId);
     res.send(pokedata);
@@ -60,7 +60,7 @@ router.delete("/:pokedataId", requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/pokedata
-router.delete("/", requireUser, async (req, res, next) => {
+router.delete("/", async (req, res, next) => {
   try {
     const pokedata = await deleteAllPokedata();
     res.send(pokedata);

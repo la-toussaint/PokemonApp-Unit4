@@ -40,7 +40,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // PATCH /api/egg_group/:egg_groupId
-router.patch("/:egg_groupId", requireUser, async (req, res, next) => {
+router.patch("/:egg_groupId", async (req, res, next) => {
   try {
     const egg_group = await updateEgg_groupById(
       req.params.egg_groupId,
@@ -53,7 +53,7 @@ router.patch("/:egg_groupId", requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/egg_group/:egg_groupId
-router.delete("/:egg_groupId", requireUser, async (req, res, next) => {
+router.delete("/:egg_groupId", async (req, res, next) => {
   try {
     const egg_group = await deleteEgg_groupById(req.params.egg_groupId);
     res.send(egg_group);
@@ -63,7 +63,7 @@ router.delete("/:egg_groupId", requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/egg_group
-router.delete("/", requireUser, async (req, res, next) => {
+router.delete("/", async (req, res, next) => {
   try {
     const egg_group = await deleteAllEgg_group();
     res.send(egg_group);

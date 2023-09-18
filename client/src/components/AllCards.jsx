@@ -19,52 +19,15 @@ export default function AllCards() {
   const [searchParam, setSearchParam] = useState(null);
   const navigate = useNavigate();
   const renderImages = () => {
-    checkIfCrossoriginMeAvailable()
-      .then((crossoriginMeAvailable) => {
-        return imageUrls.map((imageUrl) => (
-          <img
-            src={
-              crossoriginMeAvailable
-                ? `https://crossorigin.me/${imageUrl}`
-                : `https://cors-anywhere.herokuapp.com/${imageUrl}`
-            }
-          />
-        ));
-      })
-      .catch((error) => {
-        console.error("Error checking crossorigin.me availability:", error);
-      });
-  };
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  useEffect(() => {
-    Promise.all([
-      fetchAllPokedata(),
-      fetchAllGmax(),
-      // fetchAllEgg_group(),
-      // fetchAllPoke_egg(),
-      fetchAllBreed(),
-    ])
-      .then((results) => {
-        const [pokedata, gmax, breed] = results;
-        const data = pokedata.reduce((accum, curr) => {
-          const gmaxData = gmax.find((g) => g.pokename === curr.pokename);
-          const breedData = breed.find((b) => b.pokename === curr.pokename);
+    // checkIfCrossoriginMeAvailable()
+    //   .then((crossoriginMeAvailable) => {
+    return imageUrls.map((imageUrl, index) => {
+      const isGigantamax = imageUrl.includes("Gigantamax");
+      const altText = isGigantamax ? `${pokename} Giga` : pokename;
 
-          return [
-            ...accum,
-            {
-              ...curr,
-              ...gmaxData,
-              ...breedData,
-            },
-          ];
-        }, []);
-        postList(data);
-      })
-      .catch((error) => {
-        setError(error);
-      });
-  }, []);
+      return <img key={index} src={imageUrl} alt={altText} />;
+    });
+  };
 
   useEffect(() => {
     const filteredPosts = posts.filter((p) => {
@@ -80,6 +43,7 @@ export default function AllCards() {
     <div className="post-card-container">
       <SearchBar setSearchParam={setSearchParam} />
       {posts.map((post) => {
+        const pokename = post.pokename;
         return (
           <div className="post-card" key={post.pokename}>
             <ReactCardFlip
@@ -87,7 +51,11 @@ export default function AllCards() {
               isFlipped={isFlipped[post.pokedata_id]}
             >
               <div className="flip-card-front">
-                <img className="post-img" src={post.b4g_max_image} />
+                <img
+                  className="post-img"
+                  src={post.b4g_max_image}
+                  alt={altText}
+                />
                 <div>Pokémon National Id: {post.national_num} </div>
                 <div> Pokémon Name: {post.pokename}</div>
                 <div>Pokémon Type 1: {post.poketype1} </div>
@@ -110,7 +78,11 @@ export default function AllCards() {
                 )}
               </div>
               <div className="flip-card-back">
-                <img className="post-img-back" src={post.post_g_max_image} />
+                <img
+                  className="post-img-back"
+                  src={post.post_g_max_image}
+                  alt={altText}
+                />
                 <p>Pokename: {post.pokename}</p>
                 <p>Poketype1 Id: {post.poketype1}</p>
                 <p>Poketype2: {post.poketype2}</p>

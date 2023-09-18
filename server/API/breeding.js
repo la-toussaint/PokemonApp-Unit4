@@ -40,7 +40,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // PATCH /api/breeding/:breedingId
-router.patch("/:breedingId", requireUser, async (req, res, next) => {
+router.patch("/:breedingId", async (req, res, next) => {
   try {
     const breeding = await updateBreedingById(req.params.breedingId, req.body);
     res.send(breeding);
@@ -50,7 +50,7 @@ router.patch("/:breedingId", requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/breeding/:breedingId
-router.delete("/:breedingId", requireUser, async (req, res, next) => {
+router.delete("/:breedingId",async (req, res, next) => {
   try {
     const breeding = await deleteBreedingById(req.params.breedingId);
     res.send(breeding);
@@ -60,7 +60,7 @@ router.delete("/:breedingId", requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/breeding
-router.delete("/", requireUser, async (req, res, next) => {
+router.delete("/", async (req, res, next) => {
   try {
     const breeding = await deleteAllBreeding();
     res.send(breeding);

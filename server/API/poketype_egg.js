@@ -42,7 +42,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // PATCH /api/poketype_egg/:poketype_eggId
-router.patch("/:poketype_eggId", requireUser, async (req, res, next) => {
+router.patch("/:poketype_eggId",  async (req, res, next) => {
   try {
     const poketype_egg = await updatePoketype_eggById(
       req.params.poketype_eggId,
@@ -55,7 +55,7 @@ router.patch("/:poketype_eggId", requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/poketype_egg/:poketype_eggId
-router.delete("/:poketype_eggId", requireUser, async (req, res, next) => {
+router.delete("/:poketype_eggId", async (req, res, next) => {
   try {
     const poketype_egg = await deletePoketype_eggById(
       req.params.poketype_eggId
@@ -67,7 +67,7 @@ router.delete("/:poketype_eggId", requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/poketype_egg
-router.delete("/", requireUser, async (req, res, next) => {
+router.delete("/", async (req, res, next) => {
   try {
     const poketype_egg = await deleteAllPoketype_egg();
     res.send(poketype_egg);

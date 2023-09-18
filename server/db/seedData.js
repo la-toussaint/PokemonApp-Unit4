@@ -997,21 +997,18 @@ const users = [
     password: "password",
     fav_pokemon: "Alcremie",
   },
-
   {
     name: "Bruno",
     username: "bruno",
     password: "iamcool",
     fav_pokemon: "Lillipup",
   },
-
   {
     name: "Winston",
     username: "winston",
     password: "iluvpoke",
     fav_pokemon: "Gengar",
   },
-
   {
     name: "Alden",
     username: "alden",

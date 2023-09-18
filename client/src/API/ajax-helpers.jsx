@@ -1,15 +1,59 @@
 import {
   BASE_URL_USERS_ME,
- BASE_URL_USERS, 
+  BASE_URL_USERS,
   BASE_URL_POKEDATA,
   BASE_URL_GMAX,
   BASE_URL_POKE_EGG,
   BASE_URL_EGG_GROUP,
   BASE_URL_BREED,
   BASE_URL_DELET,
+  BASE_URL_AUTH_REG,
+  BASE_URL_AUTH_LOGIN,
 } from "./index";
 
+export const login = async (username, password) => {
+  try {
+    const response = await fetch(`BASE_URL_AUTH_LOGIN`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: {
+          username,
+          password,
+        },
+      }),
+    });
+    const result = await response.json();
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.error(err);
+  }
+};
 
+export const registerUser = async (username, password) => {
+  try {
+    const response = await fetch(`BASE_URL_AUTH_REG`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: {
+          username,
+          password,
+        },
+      }),
+    });
+    const result = await response.json();
+    console.log(result);
+  } catch (error) {
+    setError(`Authentication failed with status ${response.status}`);
+    // Handle non-OK response status here (e.g., show an error message
+  }
+};
 
 export const fetchAllUsers = async () => {
   try {
@@ -83,7 +127,7 @@ export const fetchProfile = async (token) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `${token}`,
       },
     });
     const result = await response.json();
@@ -95,13 +139,16 @@ export const fetchProfile = async (token) => {
 
 export const deletePost = async (token, pokedata_id) => {
   try {
-    const response = await fetch(`${`http://localhost:8080/api/posts`}/${pokedata_id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `${`http://localhost:8080/api/posts`}/${pokedata_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+      }
+    );
     const result = await response.json();
     console.log(result);
     return result;
@@ -157,11 +204,11 @@ function RenderSelectedUser({ user_id }) {
         <b>Username: </b>
         {user.username}
       </p>
-	  <p>
+      <p>
         <b>Favorite Pokémon: </b>
         {user.fav_pokemon}
       </p>
-	  <p>
+      <p>
         <b>Posts: </b>
         {user.post}
       </p>
@@ -169,17 +216,35 @@ function RenderSelectedUser({ user_id }) {
   );
 }
 
-export async function makePost(token, national_num, pokename, poketype1, poketype2, pokespecies, height, weight, sign_ability) {
+export async function makePost(
+  token,
+  national_num,
+  pokename,
+  poketype1,
+  poketype2,
+  pokespecies,
+  height,
+  weight,
+  sign_ability
+) {
   try {
     const response = await fetch(BASE_URL_POSTS, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `${token}`,
       },
       body: JSON.stringify({
         post: {
-			national_num, pokename, poketype1, poketype2, pokespecies, height, weight, sign_ability},
+          national_num,
+          pokename,
+          poketype1,
+          poketype2,
+          pokespecies,
+          height,
+          weight,
+          sign_ability,
+        },
       }),
     });
     const result = await response.json();

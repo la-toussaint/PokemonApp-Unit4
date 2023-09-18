@@ -1,75 +1,50 @@
 import { react, useState } from "react";
 import { setToken } from "../redux/index";
+import { registerUser } from  "../../API/ajax-helpers";
 
 const BASE_URL = `http://localhost:8080`;
-export const BASE_URL_USER_REG = `${BASE_URL}/api/users/register`;
+export const BASE_URL_USER_REG = `${BASE_URL}/api/auth/register`;
 
-export default function SignUpForm({ setToken }) {
+export default function Register({ setToken }) { 
   const [name, setName] = useState("");
   const [fav_pokemon, setFav_pokemon] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const nav = useNavigate();
 
-  const registerUser = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(BASE_URL_USER_REG, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user: {
-            name,
-            username,
-            password,
-            fav_pokemon,
-          },
-        }),
-      });
-      const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-      console.log(hashedPassword);
-      const user = await createUser({ username, password: hashedPassword });
-      console.log(user);
-      delete user.password;
-
-      const token = jwt.sign(user, JWT_COOKIE);
-
-      res.cookie("token", token, {
-        sameSite: "strict",
-        httpOnly: true,
-        signed: true,
-      });
-
-      const data = await response.json();
-      console.log("data: ", data);
-      setToken(data.token);
-      setSuccess(data.message);
-    } catch (error) {
-      setError(error);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(username, password);
+        const register = await registerUser(username, password);
+        setToken(register.token);
+        console.log(register);
+        setUsername('');
+        setPassword('');
+		setMessage({ type: "success", text: successMessage("Success! You have been registered. Thank you for signing up.")});
+        nav('/posts');
     }
-  };
 
-  return (
+  
+  return(
     <>
-      <h2>Sign Up!</h2>
-      {error && <p>{error}</p>}
-      {success && <p>{success}</p>}
-      <form className="sign-up-form" onSubmit={registerUser}>
+      <h2 className="sign-up">New User Sign-Up</h2>
+      {error && <p className="sign-up-error">{error}</p>}
+      {successMessage && <p className="sign-up-success">{successMessage}</p>}
+      <form className="sign-up-form" onSubmit={handleSubmit}>
         <label>
           Name: {""} <br />
-          <input
+          <input placeholder="name - optional"
             optional="true"
             value={name}
-            onChange={(e) => setname(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
           <br />
         </label>
         <label>
           Username: {""} <br />
-          <input
+          <input placeholder="username - REQUIRED"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
@@ -77,7 +52,7 @@ export default function SignUpForm({ setToken }) {
         </label>
         <label>
           Password: {""} <br />
-          <input
+          <input placeholder="password - REQUIRED"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -86,7 +61,7 @@ export default function SignUpForm({ setToken }) {
         </label>
         <label>
           Favorite Pokémon: {""} <br />
-          <input
+          <input placeholder="favorite pokémon - optional"
             optional="true"
             value={fav_pokemon}
             onChange={(e) => setFav_pokemon(e.target.value)}
@@ -94,12 +69,12 @@ export default function SignUpForm({ setToken }) {
           <br />
         </label>
         <br />
-        <button className="signup-click" type="submit">
+        <button className="signup-click" type="submit">   
           Submit
         </button>
       </form>
       {!(username.length >= 8) && (
-        <p style={{ color: "white", backgroundColor: "#0072b5" }}>
+        <p style={{ color: "linen", backgroundColor: "#0072b5" }}>
           No more than an 8-character password please.
         </p>
       )}

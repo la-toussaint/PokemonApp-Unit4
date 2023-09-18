@@ -40,7 +40,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // PATCH /api/g_max/:g_maxId
-router.patch("/:g_maxId", requireUser, async (req, res, next) => {
+router.patch("/:g_maxId", async (req, res, next) => {
   try {
     const g_max = await updateG_maxById(req.params.g_maxId, req.body);
     res.send(g_max);
@@ -50,7 +50,7 @@ router.patch("/:g_maxId", requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/g_max/:g_maxId
-router.delete("/:g_maxId", requireUser, async (req, res, next) => {
+router.delete("/:g_maxId", async (req, res, next) => {
   try {
     const g_max = await deleteG_maxById(req.params.g_maxId);
     res.send(g_max);
@@ -60,7 +60,7 @@ router.delete("/:g_maxId", requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/g_max
-router.delete("/", requireUser, async (req, res, next) => {
+router.delete("/", async (req, res, next) => {
   try {
     const g_max = await deleteAllG_max();
     res.send(g_max);

@@ -1,27 +1,26 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const authRouter = require("express").Router();
-const { createUser, getUserByUsername } = require("../db/sql helpers/users");
-const { JWT_SECRET, COOKIE_SECRET } = require("../secrets");
+const router = require("express").Router();
+const { createUsers, getUsersByUsername } = require("../db/sql helpers/users");
+const { JWT_SECRET } = require("../secrets");
 const SALT_ROUNDS = 10;
 
-authRouter.get("/", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
-    console.log("HEY! I am in your terminal!");
     res.send("WOW! A thing in your response!");
   } catch (error) {
     next(error);
   }
 });
 
-authRouter.post("/register", async (req, res, next) => {
+router.post("/register", async (req, res, next) => {
   try {
     console.log(req.body);
     const { username, password } = req.body;
     console.log(typeof password);
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     console.log(hashedPassword);
-    const user = await createUser({ username, password: hashedPassword });
+    const user = await createUsers({ username, password: hashedPassword });
     console.log(user);
     delete user.password;
 
@@ -30,7 +29,7 @@ authRouter.post("/register", async (req, res, next) => {
     res.cookie("token", token, {
       sameSite: "strict",
       httpOnly: true,
-      signed: true,
+      signed: true
     });
 
     delete user.password;
@@ -41,12 +40,12 @@ authRouter.post("/register", async (req, res, next) => {
   }
 });
 
-authRouter.post("/login", async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   console.log("HI");
   try {
     const { username, password } = req.body;
     console.log({ username, password });
-    const user = await getUserByUsername(username);
+    const user = await getUsersByUsername(username);
     console.log(user);
     const validPassword = await bcrypt.compare(password, user.password);
 
@@ -68,7 +67,7 @@ authRouter.post("/login", async (req, res, next) => {
   }
 });
 
-authRouter.post("/logout", async (req, res, next) => {
+router.post("/logout", async (req, res, next) => {
   try {
     res.clearCookie("token", {
       sameSite: "strict",
@@ -84,4 +83,4 @@ authRouter.post("/logout", async (req, res, next) => {
   }
 });
 
-module.exports = authRouter;
+module.exports = router;

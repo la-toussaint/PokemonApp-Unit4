@@ -1,10 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const {
+	
 	createUsers,
-	getUser,
-	getUserById,
-	getUserByUsername,
+	getAllUsers,
+	getUsersById,
+	getUsersByUsername,
+	updateUsersById,
+	deleteAllUsers,
+	deleteUsersById
 } = require("../db/sql helpers/users");
 
 
@@ -22,7 +26,7 @@ router.get("/", async (req, res, next) => {
 // GET /api/user/:userId
 router.get("/:userId", async (req, res, next) => {
   try {
-    const user = await getUserById(req.params.userId);
+    const user = await getUsersById(req.params.userId);
     res.send(user);
   } catch (error) {
     next(error);
@@ -31,7 +35,7 @@ router.get("/:userId", async (req, res, next) => {
 
 router.get("/:username", async (req, res, next) => {
 	try {
-	  const user = await getUserByUsername(req.params.username);
+	  const user = await getUsersByUsername(req.params.username, req,body);
 	  res.send(user);
 	} catch (error) {
 	  next(error);
@@ -48,9 +52,9 @@ router.post("/", async (req, res, next) => {
 });
 
 // PATCH /api/user/:userId
-router.patch("/:userId",  async (req, res, next) => {
+router.patch("/:user_id",  async (req, res, next) => {
   try {
-    const user = await updateUserById(req.params.userId, req.body);
+    const user = await updateUsersById(req.params.user_id, req.body);
     res.send(user);
   } catch (error) {
     next(error);
@@ -58,9 +62,9 @@ router.patch("/:userId",  async (req, res, next) => {
 });
 
 // DELETE /api/user/:userId
-router.delete("/:userId", async (req, res, next) => {
+router.delete("/:user_id", async (req, res, next) => {
   try {
-    const user = await deleteUserById(req.params.userId);
+    const user = await deleteUsersById(req.params.user_id);
     res.send(user);
   } catch (error) {
     next(error);
