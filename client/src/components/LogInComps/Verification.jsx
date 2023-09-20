@@ -1,4 +1,3 @@
-import { login } from  "../../API/ajax-helpers";
 import React, { useState } from "react";
 import {
   Grid,
@@ -12,8 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/index";
 
-export default function Login({ setToken, message, setMessage }) {
-  const nav = useNavigate();
+const VerificationPage = ({ message, setMessage }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,74 +23,98 @@ export default function Login({ setToken, message, setMessage }) {
     padding: 20,
     height: "70vh",
     width: 280,
-    margin: "50px auto",
-  };
+  margin: "50px auto",
+};
   const btnstyle = { margin: "8px 0" };
 
-  const handleSubmit = async (e) => {
+  const loginUser = async (e) => {
     e.preventDefault();
-    console.log(username, password);
-    const register = await login(username, password);
-    setToken(register.data.token);
-    console.log(register);
-    setUsername("");
-    setPassword("");
-	setMessage({ text: message, type: "success" });
-    nav("/posts");
- 
+    try {
+      const login = await fetch(`http://localhost:8080/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: {
+            user_id,
+            name,
+            username,
+            password,
+            fav_pokemon,
+          },
+        }),
+      });
+      console.log("login: ", login);
+      const token = jwt.sign(user, JWT_SECRET);
+      console.log("token: ", token);
+      // res.cookie("token", token, {
+      //   sameSite: "strict",
+      //   httpOnly: true,
+      //   signed: true,
+      // });
 
-    return (
-      <Grid>
-        <Paper className="login-paper" elevation={10} style={paperStyle}>
-          <Grid className="login-grid" align="center">
-            <h2>Sign In</h2>
-          </Grid>
-          <TextField
-            label="Name"
-            placeholder="Enter your name"
-            fullWidth
-            optional="true"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            label="Username"
-            placeholder="Enter username"
-            fullWidth
-            required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <TextField
-            label="Password"
-            placeholder="Enter password"
-            type="password"
-            fullWidth
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <TextField
-            label="Favorite Pokémon"
-            placeholder="Enter Pokémon name"
-            fullWidth
-            optional="true"
-            value={fav_pokemon}
-            onChange={(e) => setFav_pokemon(e.target.value)}
-          />
-          <Button
-            className="login-click"
-            type="submit"
-            color="primary"
-            variant="contained"
-            style={btnstyle}
-            fullWidth
-            onClick={loginUser}
-          >
-            Sign in
-          </Button>
-        </Paper>
-      </Grid>
-    );
+      dispatch(setToken(token));
+      setMessage({ text: message, type: "success" });
+      navigate("/");
+    } catch (error) {
+      setMessage({ text: message, type: "error" });
+    }
   };
-}
+
+  return (
+    <Grid>
+      <Paper className="login-paper" elevation={10} style={paperStyle}>
+        <Grid className="login-grid" align="center">
+          <h2>Sign In</h2>
+        </Grid>
+        <TextField
+          label="Name"
+          placeholder="Enter your name"
+          fullWidth
+          optional="true"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <TextField
+          label="Username"
+          placeholder="Enter username"
+          fullWidth
+          required
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <TextField
+          label="Password"
+          placeholder="Enter password"
+          type="password"
+          fullWidth
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <TextField
+          label="Favorite Pokémon"
+          placeholder="Enter Pokémon name"
+          fullWidth
+          optional="true"
+          value={fav_pokemon}
+          onChange={(e) => setFav_pokemon(e.target.value)}
+        />
+        <Button
+          className="login-click"
+          type="submit"
+          color="primary"
+          variant="contained"
+          style={btnstyle}
+          fullWidth
+          onClick={loginUser}
+        >
+          Sign in
+        </Button>
+      </Paper>
+    </Grid>
+  );
+};
+
+export default VerificationPage;

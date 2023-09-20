@@ -19,15 +19,53 @@ export default function AllCards() {
   const [searchParam, setSearchParam] = useState(null);
   const navigate = useNavigate();
   const renderImages = () => {
-    // checkIfCrossoriginMeAvailable()
-    //   .then((crossoriginMeAvailable) => {
-    return imageUrls.map((imageUrl, index) => {
-      const isGigantamax = imageUrl.includes("Gigantamax");
-      const altText = isGigantamax ? `${pokename} Giga` : pokename;
-
-      return <img key={index} src={imageUrl} alt={altText} />;
-    });
+    checkIfCrossoriginMeAvailable()
+      .then((crossoriginMeAvailable) => {
+        return imageUrls.map((imageUrl) => (
+          <img
+            src={
+              crossoriginMeAvailable
+                ? `https://crossorigin.me/${imageUrl}`
+                : `https://cors-anywhere.herokuapp.com/${imageUrl}`
+            }
+            type="image/png"
+          />
+        ));
+      })
+      .catch((error) => {
+        console.error("Error checking crossorigin.me availability:", error);
+      });
   };
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  useEffect(() => {
+    Promise.all([
+      fetchAllPokedata(),
+      fetchAllGmax(),
+      // fetchAllEgg_group(),
+      // fetchAllPoke_egg(),
+      fetchAllBreed(),
+    ])
+      .then((results) => {
+        const [pokedata, gmax, breed] = results;
+        const data = pokedata.reduce((accum, curr) => {
+          const gmaxData = gmax.find((g) => g.pokename === curr.pokename);
+          const breedData = breed.find((b) => b.pokename === curr.pokename);
+
+          return [
+            ...accum,
+            {
+              ...curr,
+              ...gmaxData,
+              ...breedData,
+            },
+          ];
+        }, []);
+        postList(data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  }, []);
 
   useEffect(() => {
     const filteredPosts = posts.filter((p) => {
@@ -43,7 +81,6 @@ export default function AllCards() {
     <div className="post-card-container">
       <SearchBar setSearchParam={setSearchParam} />
       {posts.map((post) => {
-        const pokename = post.pokename;
         return (
           <div className="post-card" key={post.pokename}>
             <ReactCardFlip
@@ -54,7 +91,7 @@ export default function AllCards() {
                 <img
                   className="post-img"
                   src={post.b4g_max_image}
-                  alt={altText}
+                  alt={post.pokename}
                 />
                 <div>Pokémon National Id: {post.national_num} </div>
                 <div> Pokémon Name: {post.pokename}</div>
@@ -81,7 +118,7 @@ export default function AllCards() {
                 <img
                   className="post-img-back"
                   src={post.post_g_max_image}
-                  alt={altText}
+                  alt={post.pokename - "Giga"}
                 />
                 <p>Pokename: {post.pokename}</p>
                 <p>Poketype1 Id: {post.poketype1}</p>

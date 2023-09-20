@@ -4,7 +4,10 @@ const router = express.Router();
 // GET /api/health
 router.get("/pokedex", (req, res, next) => {
   res.send("OK");
+  res.render('index', { title: 'Express' });
 });
+
+
 router.use("/auth", require("./auth"));
 router.use("/pokedata", require("./pokedata"));
 // => /pokedata/**  =>  pokedata => /pokedata 

@@ -11,7 +11,7 @@ export default function SearchBar({ setSearchParam }) {
   return (
     <div className="search-bar">
       <label>
-        Search:{" "}
+        Search:
         <input
           type="text"
           placeholder="Search"
