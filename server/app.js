@@ -1,49 +1,53 @@
-const createError = require('http-errors');
+const createError = require("http-errors");
 const express = require("express");
-const path = require('path');
+const path = require("path");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const { COOKIE_SECRET } = require("./secrets");
 const { authRequired } = require("./API/utils");
 const cors = require("cors");
 const client = require("./db/client");
-const logger = require('morgan');
-const config = require('./config');
-
-
+const logger = require("morgan");
+const config = require("./config");
 
 const indexRouter = require("./API/index");
 const app = express();
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
 
-app.use(cors({
-  origin: '*',
-}));
-app.use(logger('dev'));
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+app.use(logger("dev"));
+app.use(cookieParser(COOKIE_SECRET));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 require("dotenv").config();
 const url = config.client;
-const connect = client.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+const connect = client.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 app.use(morgan("dev"));
-app.use(cookieParser(COOKIE_SECRET));
 app.use(express.json());
 
+client.connect(
+  () => {
+    console.log("Connected to database: Pokedex");
+  },
+  (err) => console.log(err)
+);
 
-client.connect(() => {
-	console.log('Connected to database: Pokedex');
-  }, (err) => console.log(err));
-  
-app.use('/', indexRouter);
+app.use("/", indexRouter);
 app.use("/api", indexRouter);
 
-app.get("/test", authRequired, (req, res, next) => {
+app.post("/test", authRequired, (req, res, next) => {
   res.send("You are authorized");
 });
 
@@ -52,13 +56,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("*", (req, res, next) => {
-	res.status(404).json({ error: "Uh oh, what r u looking for?" });
+  res.status(404).json({ error: "Uh oh, what r u looking for?" });
 });
-  
+
 app.use((error, req, res, next) => {
+  console.error(error);
   res.status(500).send(error);
 });
-
-
 
 module.exports = app; // Router: /api

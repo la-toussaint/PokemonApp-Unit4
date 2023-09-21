@@ -121,17 +121,13 @@ export default function AllCards() {
                   alt={post.pokename - "Giga"}
                 />
                 <p>Pokename: {post.pokename}</p>
-                <p>Poketype1 Id: {post.poketype1}</p>
-                <p>Poketype2: {post.poketype2}</p>
-                <p>Pokespecies: {post.pokespecies}</p>
                 <p>Signature Ability: {post.sign_ability}</p>
                 <p>G_max_move: {post.g_max_move}</p>
                 <p>G-max move type: {post.g_max_move_type}</p>
                 <p>Height: {post.height}</p>
                 <p>Weight: {post.weight}</p>
                 <p>Gender: {post.gender}</p>
-                <p>egg group: {post.egg_group}</p>
-                <p>gender: {post.gender}</p>
+                <p>Egg group: {post.egg_group1}</p>
                 <button
                   className="flip"
                   onClick={() => handleClick(post.pokedata_id)}

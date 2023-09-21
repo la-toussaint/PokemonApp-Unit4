@@ -1,3 +1,6 @@
+import React, { useState, dispatch } from "react";
+import { setProfile } from "../components/redux";
+
 import {
   BASE_URL_USERS_ME,
   BASE_URL_USERS,
@@ -10,6 +13,25 @@ import {
   BASE_URL_AUTH_REG,
   BASE_URL_AUTH_LOGIN,
 } from "./index";
+
+
+export const testAuth = async (token) => {
+  try {
+    const response = await fetch(`http://localhost:8080/api/auth/test`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token
+      },
+    });
+    const result = await response.json();
+    return result
+  } catch (error) {
+    console.error(error);
+    // Handle non-OK response status here (e.g., show an error message
+  }
+};
+
 
 export const login = async (username, password) => {
   try {
@@ -25,6 +47,7 @@ export const login = async (username, password) => {
         },
       }),
     });
+	
     const result = await response.json();
     console.log(result);
     return result;
@@ -49,8 +72,9 @@ export const registerUser = async (username, password) => {
     });
     const result = await response.json();
     console.log(result);
-  } catch (error) {
-    setError(`Authentication failed with status ${response.status}`);
+    return result;
+  } catch (err) {
+    console.error(`Authentication failed with status ${err}`);
     // Handle non-OK response status here (e.g., show an error message
   }
 };
@@ -121,17 +145,19 @@ export const fetchAllBreed = async () => {
   }
 };
 
-export const fetchProfile = async (token) => {
+export const fetchProfile = (token) => async (dispatch, setProfile) => {
   try {
-    const response = await fetch(`http://localhost:8080/api/users/me`, {
-      method: "GET",
+    const response = await fetch(`http://localhost:8080/test`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `${token}`,
       },
     });
+	if (!response.ok) { throw new Error("Request failed");
+}
     const result = await response.json();
-    return result;
+    dispatch(setProfile(result));
   } catch (error) {
     console.log(error);
   }
@@ -157,43 +183,58 @@ export const deletePost = async (token, pokedata_id) => {
   }
 };
 
-function RenderSelectedUser({ user_id }) {
-  const fetchSingleUser = async (user_id) => {
+export default function RenderSelectedUser({ user_id, token }) {
+  const fetchSingleUser = async (user_id, token) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/users/me`);
-      const user = await response.json();
-      const userCard = document.createCard("div");
-      userCard.classList.add("user");
-      userCard.innerHTML = `
-            <h4>${user.name}</h4>
-            <p>${user.user_id}</p>
-            <p>${user.username}</p>
-			<p>${user.password}</p>
-            <p>${user.fav_pokemon}</p>
-			<p>${user.token}</p>
-            ${user.posts}</p>
-
-        `;
-      usersContainer.appendChild(userCard);
+      const response = await fetch(`http://localhost:8080/test`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+      });
+      const selectedUser = await response.json();
+      return selectedUser;
     } catch (error) {
       console.log(error);
     }
   };
 
+  //   const userCard = document.createCard("div");
+  //   userCard.classList.add("user");
+  //   userCard.innerHTML = `
+  //         <h4>${user.name}</h4>
+  //         <p>${user.user_id}</p>
+  //         <p>${user.username}</p>
+  // 		<p>${user.password}</p>
+  //         <p>${user.fav_pokemon}</p>
+  // 		<p>${user.token}</p>
+  //         ${user.posts}</p>
+
+  //     `;
+  //   usersContainer.appendChild(userCard);
+  // } catch (error) {
+  //   console.log(error);
+
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    async function fetchSelectedUser() {
+    async function fetchSelectedUser(token) {
       try {
-        const response = await fetch(`BASE_URL_USERS_ME`);
-        const result = await response.json();
-        setUser(result);
+        const response = await fetch(`BASE_URL_USERS_ME`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+          },
+        });
       } catch (error) {
         console.error(error);
       }
+
+      fetchSelectedUser();
     }
-    fetchSelectedUser();
-  }, []);
+  });
   return (
     <div>
       <p>

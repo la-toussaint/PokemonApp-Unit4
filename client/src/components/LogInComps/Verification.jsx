@@ -23,39 +23,34 @@ const VerificationPage = ({ message, setMessage }) => {
     padding: 20,
     height: "70vh",
     width: 280,
-  margin: "50px auto",
-};
+    margin: "50px auto",
+  };
   const btnstyle = { margin: "8px 0" };
 
   const loginUser = async (e) => {
     e.preventDefault();
     try {
-      const login = await fetch(`http://localhost:8080/api/auth/login`, {
+      console.log("makin request");
+      console.log("username", username);
+      console.log("password", password);
+
+      const response = await fetch(`http://localhost:8080/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           user: {
-            user_id,
-            name,
             username,
             password,
-            fav_pokemon,
           },
         }),
-      });
-      console.log("login: ", login);
-      const token = jwt.sign(user, JWT_SECRET);
-      console.log("token: ", token);
-      // res.cookie("token", token, {
-      //   sameSite: "strict",
-      //   httpOnly: true,
-      //   signed: true,
-      // });
-
+	});
+      const {token, user} = await response.json();
+      console.log("response: ", token, user);
       dispatch(setToken(token));
-      setMessage({ text: message, type: "success" });
+	  dispatch(setProfile(user))
+      setMessage({ text: "login successful!", type: "success" });
       navigate("/");
     } catch (error) {
       setMessage({ text: message, type: "error" });

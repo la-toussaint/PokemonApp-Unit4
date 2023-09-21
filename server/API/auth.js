@@ -29,26 +29,31 @@ router.post("/register", async (req, res, next) => {
     res.cookie("token", token, {
       sameSite: "strict",
       httpOnly: true,
-      signed: true
+      signed: true,
     });
 
     delete user.password;
 
-    res.send({ user });
+    res.send({ user, token });
   } catch (error) {
+    console.log("error: ", error);
     next(error);
   }
 });
 
 router.post("/login", async (req, res, next) => {
-  console.log("HI");
   try {
-    const { username, password } = req.body;
-    console.log({ username, password });
-    const user = await getUsersByUsername(username);
-    console.log(user);
+    console.log(" req.body;: ", req.body);
+    const { username, password } = req.body.user;
+    console.log("username: ", username);
+    const user = await getUsersByUsername(username).catch((error) =>
+      console.error("login error", error)
+    );
+    console.log("user: ", user);
     const validPassword = await bcrypt.compare(password, user.password);
-
+    console.log("password: ", password);
+    console.log("user.password: ", user.password);
+    console.log("validPassword: ", validPassword);
     if (validPassword) {
       const token = jwt.sign(user, JWT_SECRET);
 
@@ -60,8 +65,9 @@ router.post("/login", async (req, res, next) => {
 
       delete user.password;
 
-      res.send({ user });
+      res.status(200).send({ token, user });
     }
+    res.send({ message: "invalid password" });
   } catch (error) {
     next(error);
   }

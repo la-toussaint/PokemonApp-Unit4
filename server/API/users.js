@@ -1,17 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const {
-	
-	createUsers,
-	getAllUsers,
-	getUsersById,
-	getUsersByUsername,
-	updateUsersById,
-	deleteAllUsers,
-	deleteUsersById
+  createUsers,
+  getAllUsers,
+  getUsersById,
+  getUsersByUsername,
+  updateUsersById,
+  deleteAllUsers,
+  deleteUsersById,
 } = require("../db/sql helpers/users");
-
-
 
 // GET /api/user
 router.get("/", async (req, res, next) => {
@@ -19,6 +16,7 @@ router.get("/", async (req, res, next) => {
     const users = await getAllUsers();
     res.send(users);
   } catch (error) {
+    console.log("error: ", error);
     next(error);
   }
 });
@@ -34,13 +32,13 @@ router.get("/:userId", async (req, res, next) => {
 });
 
 router.get("/:username", async (req, res, next) => {
-	try {
-	  const user = await getUsersByUsername(req.params.username, req,body);
-	  res.send(user);
-	} catch (error) {
-	  next(error);
-	}
-  });
+  try {
+    const user = await getUsersByUsername(req.params.username, req, body);
+    res.send(user);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.post("/", async (req, res, next) => {
   try {
@@ -52,7 +50,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // PATCH /api/user/:userId
-router.patch("/:user_id",  async (req, res, next) => {
+router.patch("/:user_id", async (req, res, next) => {
   try {
     const user = await updateUsersById(req.params.user_id, req.body);
     res.send(user);
@@ -72,7 +70,7 @@ router.delete("/:user_id", async (req, res, next) => {
 });
 
 // DELETE /api/user
-router.delete("/",  async (req, res, next) => {
+router.delete("/", async (req, res, next) => {
   try {
     const users = await deleteAllUsers();
     res.send(users);

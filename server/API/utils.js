@@ -1,22 +1,23 @@
 const client = require("../db/client");
-const jwt = require('jsonwebtoken')
-const { JWT_SECRET } = require('../secrets')
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = require("../secrets");
 
 const authRequired = (req, res, next) => {
-  const token = req.signedCookies.token
-  console.log('Cookie Token:', token)
+	console.log(req.headers) 
+	const token = req.headers.token;
+  
+  console.log("Cookie Token:", token);
   try {
-    jwt.verify(token, JWT_SECRET)
+    jwt.verify(token, JWT_SECRET);
   } catch (error) {
     res.status(401).send({
       loggedIn: false,
-      message: 'You are def not authorized.',
-    })
-    return
+      message: "You are def not authorized.",
+    });
+    return;
   }
-  next()
-}
-
+  next();
+};
 
 // function requireUser(req, res, next) {
 //   if (!req.user) {
@@ -71,7 +72,6 @@ const authRequired = (req, res, next) => {
 //   };
 // };
 
-
 // async function checkPokemonExists(pokedata_id, pokename) {
 //   try {
 //     const {
@@ -83,7 +83,7 @@ const authRequired = (req, res, next) => {
 //       WHERE pokedata_id=$1
 //       AND pokename=$2
 //     `,
-      
+
 //     );
 
 //     return pokedata;
@@ -93,8 +93,8 @@ const authRequired = (req, res, next) => {
 // }
 
 module.exports = {
- authRequired 
-//  requireUser,
-//  requiredNotSent,
-//  checkPokemonExists,
+  authRequired,
+  //  requireUser,
+  //  requiredNotSent,
+  //  checkPokemonExists,
 };

@@ -1,17 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
+import NavBar from "./navbar";
 import { useState } from "react";
-import NavBar from "../components/navbar";
+
 import { fetchProfile, deletePost } from "../API/ajax-helpers";
-import { setProfile, deletePostFromProfile } from "../components/redux/index";
+import { setProfile, deletePostFromProfile } from "./redux/index";
 import React from "react";
 
-
-	  
 export default function ProfileLog() {
-  
-	
-	
-const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const profile = useSelector((state) => state.auth.profile);
   const token = useSelector((state) => state.auth.token);
   const [isOpen, setIsOpen] = useState(true);
@@ -22,7 +18,7 @@ const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   React.useEffect(() => {
     console.log("isLoggedIn", isLoggedIn);
     if (isLoggedIn) {
-      RenderSelectedUser(token).then((data) => {
+      fetchProfile(token).then((data) => {
         console.log("foo", data);
         dispatch(setProfile(data));
       });
@@ -46,7 +42,7 @@ const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
         console.error("Error checking crossorigin.me availability:", error);
       });
   };
- 
+
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -57,7 +53,6 @@ const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   };
 
   return (
-	
     <div className="profile-container">
       <h2 className="profile-header">
         Posts for Username: {profile?.username}
@@ -74,11 +69,13 @@ const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
                 {post.pokename}, Pokémon Type 1: {post.poketype1}, Pokémon Type
                 2: {post.poketype2}, Pokémon Species: {post.pokespecies},
                 Pokémon Image: {renderImages(b4g_max_image)}
-                Post Name: {post.pokename}, Post Name Id: {post.poketype1}, Pokémon Type: {post.poketype2}, Pokémon Species: {post.pokespecies},
-                Signature Ability: {post.sign_ability}, G-Max Move: {post.g_max_move},
-                Messages: {post.g_max_move_type}, Post Price: {post.height},
-                Post Title: {post.weight}, Delivery: {post.gender}, Post Name:{" "}
-                {post.egg_group}, Post Name: {post.gender}, Post Image:{renderImages(post_g_max_image)}, 
+                Post Name: {post.pokename}, Post Name Id: {post.poketype1},
+                Pokémon Type: {post.poketype2}, Pokémon Species:{" "}
+                {post.pokespecies}, Signature Ability: {post.sign_ability},
+                G-Max Move: {post.g_max_move}, Messages: {post.g_max_move_type},
+                Post Price: {post.height}, Post Title: {post.weight}, Delivery:{" "}
+                {post.gender}, Post Name: {post.egg_group}, Post Name:{" "}
+                {post.gender}, Post Image:{renderImages(post_g_max_image)},
                 {post.post_g_max_height},
                 <button
                   className="delete"

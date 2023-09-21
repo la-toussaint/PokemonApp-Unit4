@@ -330,7 +330,7 @@ const pokedata = [
   {
     national_num: "0132",
     pokename: "Ditto",
-    poketype: "Normal",
+    poketype1: "Normal",
     poketype2: "N/A",
     pokespecies: "Transform",
     height: "0.3m",
@@ -339,13 +339,13 @@ const pokedata = [
   },
   {
     national_num: "0973",
-    pokename: "Flamingo",
+    pokename: "Flamigo",
     poketype1: "Flying",
     poketype2: "Fighting",
-    pokespecies: "Flower",
-    height: "1.9",
-    weight: "105kg",
-    sign_ability: "Chlorophyll",
+    pokespecies: "Synchronize",
+    height: "1.6",
+    weight: "37kg",
+    sign_ability: "Costar",
   },
   {
     national_num: "0823",
@@ -363,13 +363,31 @@ const pokedata = [
 
 const g_max = [
   {
+    g_max_move: "N/A",
+    pokename: "Ditto",
+    g_max_move_type: "N/A",
+    b4g_max_image:
+      "https://archives.bulbagarden.net/media/upload/archive/2/25/20230417193229%210132Ditto.png",
+    post_g_max_image: "N/A",
+    post_g_max_height: "N/A",
+  },
+  {
+    g_max_move: "N/A",
+    pokename: "Flamigo",
+    g_max_move_type: "N/A",
+    b4g_max_image:
+      "https://archives.bulbagarden.net/media/upload/archive/0/07/20230403005635%210973Flamigo.png",
+    post_g_max_image: "N/A",
+    post_g_max_height: "N/A",
+  },
+  {
     g_max_move: "Wildfire",
     pokename: "Charizard",
     g_max_move_type: "Fire",
     b4g_max_image:
       "https://archives.bulbagarden.net/media/upload/3/38/0006Charizard.png",
     post_g_max_image:
-      "https://m.bulbapedia.bulbagarden.net/wiki/File:0006Charizard-Gigantamax.png",
+      "https://archives.bulbagarden.net/media/upload/0/0c/0006Charizard-Gigantamax.png",
     post_g_max_height: 28,
   },
   {
@@ -387,7 +405,7 @@ const g_max = [
     pokename: "Bellossom",
     g_max_move_type: "N/A",
     b4g_max_image:
-      "https://archives.bulbagarden.net/wiki/File:0182Bellossom.png",
+      "https://archives.bulbagarden.net/media/upload/5/51/0182Bellossom.png",
     post_g_max_image: "N/A",
     post_g_max_height: "N/A",
   },
@@ -398,7 +416,7 @@ const g_max = [
     b4g_max_image:
       "https://archives.bulbagarden.net/media/upload/0/0a/0009Blastoise.png",
     post_g_max_image:
-      "https://bulbapedia.bulbagarden.net/wiki/File:0009Blastoise-Gigantamax.png",
+      "https://archives.bulbagarden.net/media/upload/archive/b/bd/20230418174256%210009Blastoise-Gigantamax.png",
     post_g_max_height: 25,
   },
 
@@ -409,7 +427,7 @@ const g_max = [
     b4g_max_image:
       "https://archives.bulbagarden.net/media/upload/5/55/0012Butterfree.png",
     post_g_max_image:
-      "https://archives.bulbagarden.net/media/upload/e/ee/0012Butterfree-Gigantamax.png",
+      "https://archives.bulbagarden.net/media/upload/archive/e/ee/20230418174313%210012Butterfree-Gigantamax.png",
     post_g_max_height: 17,
   },
   {
@@ -417,7 +435,7 @@ const g_max = [
     pokename: "Pikachu",
     g_max_move_type: "Electric",
     b4g_max_image:
-      "https://archives.bulbagarden.net/media/upload/4/4a/0025Pikachu.png",
+      "https://archives.bulbagarden.net/media/upload/archive/4/4a/20230409191226%210025Pikachu.png",
     post_g_max_image:
       "https://archives.bulbagarden.net/media/upload/8/8c/0025Pikachu-Gigantamax.png",
     post_g_max_height: 21,
@@ -427,7 +445,7 @@ const g_max = [
     pokename: "Meowth",
     g_max_move_type: "Normal",
     b4g_max_image:
-      "https://archives.bulbagarden.net/media/upload/d/d6/0052Meowth.png",
+      "https://archives.bulbagarden.net/media/upload/archive/d/d6/20230409194905%210052Meowth.png",
     post_g_max_image:
       "https://archives.bulbagarden.net/media/upload/0/08/0052Meowth-Gigantamax.png",
     post_g_max_height: 33,
@@ -437,7 +455,7 @@ const g_max = [
     pokename: "Machamp",
     g_max_move_type: "Fighting",
     b4g_max_image:
-      "https://archives.bulbagarden.net/media/upload/8/82/0068Machamp.png",
+      "https://archives.bulbagarden.net/media/upload/archive/8/82/20230417190340%210068Machamp.png",
     post_g_max_image:
       "https://archives.bulbagarden.net/media/upload/e/e4/0068Machamp-Gigantamax.png",
     post_g_max_height: 25,
@@ -477,7 +495,8 @@ const g_max = [
     g_max_move_type: "Normal",
     post_g_max_image:
       "https://archives.bulbagarden.net/media/upload/e/e2/0133Eevee-Gigantamax.png",
-    b4g_max_image: "https://bulbapedia.bulbagarden.net/wiki/File:0133Eevee.png",
+    b4g_max_image:
+      "https://archives.bulbagarden.net/media/upload/archive/e/e2/20230418174546%210133Eevee-Gigantamax.png",
     post_g_max_height: 18,
   },
   {
@@ -503,9 +522,9 @@ const g_max = [
     pokename: "Melmetal",
     g_max_move_type: "Steel",
     b4g_max_image:
-      "https://bulbapedia.bulbagarden.net/wiki/File:0809Melmetal.png",
+      "https://archives.bulbagarden.net/media/upload/archive/1/13/20230418165857%210809Melmetal.png",
     post_g_max_image:
-      "https://bulbapedia.bulbagarden.net/wiki/File:0809Melmetal-Gigantamax.png",
+      "https://archives.bulbagarden.net/media/upload/archive/a/a1/20230418174950%210809Melmetal-Gigantamax.png",
     post_g_max_height: 25,
   },
   {
@@ -533,7 +552,7 @@ const g_max = [
     pokename: "Inteleon",
     g_max_move_type: "Water",
     b4g_max_image:
-      "https://archives.bulbagarden.net/media/upload/d/dc/0818Inteleon.png",
+      "https://archives.bulbagarden.net/media/upload/archive/d/dc/20230418175328%210818Inteleon.png",
     post_g_max_image:
       "https://archives.bulbagarden.net/media/upload/2/29/0818Inteleon-Gigantamax.png",
     post_g_max_height: 40,
@@ -553,7 +572,7 @@ const g_max = [
     pokename: "Orbeetle",
     g_max_move_type: "Psychic",
     b4g_max_image:
-      "https://archives.bulbagarden.net/media/upload/5/57/0826Orbeetle.png",
+      "https://archives.bulbagarden.net/media/upload/https://archives.bulbagarden.net/media/upload/archive/5/57/20230402234100%210826Orbeetle.png",
     post_g_max_image:
       "https://archives.bulbagarden.net/media/upload/d/d5/0826Orbeetle-Gigantamax.png",
     post_g_max_height: 14,
@@ -632,7 +651,7 @@ const g_max = [
     pokename: "Hatterene",
     g_max_move_type: "Fairy",
     b4g_max_image:
-      "https://archives.bulbagarden.net/media/upload/1/19/0858Hatterene.png",
+      "https://archives.bulbagarden.net/media/upload/archive/1/19/20230402235224%210858Hatterene.png",
     post_g_max_image:
       "https://archives.bulbagarden.net/media/upload/1/10/0858Hatterene-Gigantamax.png",
     post_g_max_height: 26,
@@ -682,9 +701,9 @@ const g_max = [
     pokename: "Urshifu",
     g_max_move_type: "Dark",
     b4g_max_image:
-      "https://bulbapedia.bulbagarden.net/wiki/File:0892Urshifu-Single_Strike.png",
+      "https://archives.bulbagarden.net/media/upload/archive/5/57/20230418180551%210892Urshifu-Single_Strike.png",
     post_g_max_image:
-      "https://bulbapedia.bulbagarden.net/wiki/File:0892Urshifu-Gigantamax_Single_Strike.png",
+      "https://archives.bulbagarden.net/media/upload/archive/9/92/20230418180507%210892Urshifu-Gigantamax_Single_Strike.png",
     post_g_max_height: 26,
   },
 ];
@@ -695,7 +714,7 @@ const egg_group = [
   { pokename: "Bagon", egg_group: "Dragon" },
   { pokename: "Alcremie", egg_group: "Fairy" },
   { pokename: "Pikachu", egg_group: "Field" },
-  { pokename: "Flamingo", egg_group: "Flying" },
+  { pokename: "Flamigo", egg_group: "Flying" },
   { pokename: "Bellossom", egg_group: "Grass" },
   { pokename: "Kirlia", egg_group: "Human-Like" },
   { pokename: "Coalossal", egg_group: "Mineral" },
@@ -715,7 +734,7 @@ const poketype_egg = [
   { pokename: "Alcremie", poketype: "Fairy", egg_group: "Amorphous" },
   { pokename: "Machamp", poketype: "Fighting", egg_group: "Human-Like" },
   { pokename: "Centiskorch", poketype: "Fire", egg_group: "Bug" },
-  { pokename: "Flamingo", poketype: "Flying", egg_group: "Flying" },
+  { pokename: "Flamigo", poketype: "Flying", egg_group: "Flying" },
   { pokename: "Bellossom", poketype: "Grass", egg_group: "Grass" },
   { pokename: "Sandaconda", poketype: "Ground", egg_group: "Field" },
   { pokename: "Lapras", poketype: "Ice", egg_group: "Water 1" },
@@ -1015,6 +1034,7 @@ const users = [
     password: "iluvbro",
     fav_pokemon: "Minun",
   },
+  
 ];
 
 //pokemon
