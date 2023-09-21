@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const router = require("express").Router();
 const { createUsers, getUsersByUsername } = require("../db/sql helpers/users");
+const { authRequired } = require('./utils')
 const { JWT_SECRET } = require("../secrets");
 const SALT_ROUNDS = 10;
 
@@ -17,11 +18,8 @@ router.post("/register", async (req, res, next) => {
   try {
     console.log(req.body);
     const { username, password } = req.body;
-    console.log(typeof password);
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-    console.log(hashedPassword);
     const user = await createUsers({ username, password: hashedPassword });
-    console.log(user);
     delete user.password;
 
     const token = jwt.sign(user, JWT_SECRET);
@@ -32,23 +30,20 @@ router.post("/register", async (req, res, next) => {
       signed: true
     });
 
-    delete user.password;
-
-    res.send({ user });
+    // Send the response here, once everything is successful
+    res.send({ token });
   } catch (error) {
-    next(error);
+    console.log('error: ', error);
+    // Handle errors here
+    res.send({ error })
   }
 });
 
 router.post("/login", async (req, res, next) => {
-  console.log("HI");
   try {
     const { username, password } = req.body;
-    console.log({ username, password });
     const user = await getUsersByUsername(username);
-    console.log(user);
-    const validPassword = await bcrypt.compare(password, user.password);
-
+  const validPassword = await bcrypt.compare(password, user.password)
     if (validPassword) {
       const token = jwt.sign(user, JWT_SECRET);
 
@@ -59,8 +54,7 @@ router.post("/login", async (req, res, next) => {
       });
 
       delete user.password;
-
-      res.send({ user });
+      res.send({ token });
     }
   } catch (error) {
     next(error);
@@ -82,5 +76,7 @@ router.post("/logout", async (req, res, next) => {
     next(error);
   }
 });
+
+router.post("/test", authRequired)
 
 module.exports = router;

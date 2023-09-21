@@ -30,30 +30,17 @@ const VerificationPage = ({ message, setMessage }) => {
   const loginUser = async (e) => {
     e.preventDefault();
     try {
-      const login = await fetch(`http://localhost:8080/api/auth/login`, {
+      const response = await fetch(`http://localhost:8080/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user: {
-            user_id,
-            name,
             username,
             password,
-            fav_pokemon,
-          },
         }),
       });
-      console.log("login: ", login);
-      const token = jwt.sign(user, JWT_SECRET);
-      console.log("token: ", token);
-      // res.cookie("token", token, {
-      //   sameSite: "strict",
-      //   httpOnly: true,
-      //   signed: true,
-      // });
-
+      const {token} = await response.json()
       dispatch(setToken(token));
       setMessage({ text: message, type: "success" });
       navigate("/");

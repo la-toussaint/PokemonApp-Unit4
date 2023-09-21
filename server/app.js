@@ -24,7 +24,6 @@ app.use(cors({
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 require("dotenv").config();
@@ -43,10 +42,7 @@ client.connect(() => {
 app.use('/', indexRouter);
 app.use("/api", indexRouter);
 
-app.get("/test", authRequired, (req, res, next) => {
-  res.send("You are authorized");
-});
-
+app.post("/test", authRequired)
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });

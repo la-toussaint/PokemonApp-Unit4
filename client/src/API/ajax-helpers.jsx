@@ -33,6 +33,22 @@ export const login = async (username, password) => {
   }
 };
 
+export const testAuth = async (token) => {
+  try {
+    const response = await fetch(`http://localhost:8080/api/auth/test`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token
+      },
+    });
+    const result = await response.json();
+    return result
+  } catch (error) {
+    console.error(error);
+    // Handle non-OK response status here (e.g., show an error message
+  }
+};
 export const registerUser = async (username, password) => {
   try {
     const response = await fetch(`BASE_URL_AUTH_REG`, {

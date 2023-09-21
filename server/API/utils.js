@@ -2,11 +2,14 @@ const client = require("../db/client");
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = require('../secrets')
 
-const authRequired = (req, res, next) => {
-  const token = req.signedCookies.token
-  console.log('Cookie Token:', token)
-  try {
-    jwt.verify(token, JWT_SECRET)
+const authRequired = async (req, res, next) => {
+  const token = req.headers.authorization
+const validJWT = Boolean(jwt.verify(token, JWT_SECRET))
+
+try {
+    if(validJWT) {
+      res.json({ authorized: true})
+    }
   } catch (error) {
     res.status(401).send({
       loggedIn: false,
@@ -14,7 +17,6 @@ const authRequired = (req, res, next) => {
     })
     return
   }
-  next()
 }
 
 
