@@ -38,7 +38,7 @@ const AuthRoute = ({token, children}) => {
   const dispatch = useDispatch();
   React.useEffect(() => {
     if (isLoggedIn) {
-		testAuth(token).then((data) => console.log('user is authorized', data.authorized))
+		testAuth(token).then((data) => console.log('user is authorized', data))
     //   fetchProfile(token)(dispatch).then((data) => {
     //    (setProfile(data));
       };

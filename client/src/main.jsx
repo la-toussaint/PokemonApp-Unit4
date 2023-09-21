@@ -7,9 +7,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./components/redux/index";
 import { BrowserRouter } from "react-router-dom";
 
-
 export const store = configureStore({
-  reducer: authReducer,
+  reducer: {
+    auth: authReducer.reducer,
+  },
   devTools: true,
 });
 
