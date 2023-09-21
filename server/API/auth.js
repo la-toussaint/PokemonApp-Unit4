@@ -42,8 +42,10 @@ router.post("/register", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    const user = await getUsersByUsername(username);
-  const validPassword = await bcrypt.compare(password, user.password)
+    const user = await getUsersByUsername(username).catch((error) =>
+      console.error("login error", error)
+    );
+    const validPassword = await bcrypt.compare(password, user.password);
     if (validPassword) {
       const token = jwt.sign(user, JWT_SECRET);
 

@@ -34,13 +34,6 @@ export default function App() {
   ]);
 
   const [message, setMessage] = React.useState(null);
-  const dispatch = useDispatch();
-  
-  React.useEffect(() => {
-    if (isLoggedIn) {
-      testAuth(token).then((data) => console.log('user is authorized', data.authorized))
-    }
-  }, [isLoggedIn]);
 
   return (
     <>

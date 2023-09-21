@@ -9,10 +9,9 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setToken } from "../redux/index";
-import { setProfile } from "../redux/index";
+import { setProfile, setToken } from "../redux/index";
 
-const VerificationPage = ({ message, setMessage }) => {
+const VerificationPage = ({ setMessage }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
@@ -49,7 +48,7 @@ const VerificationPage = ({ message, setMessage }) => {
       setMessage({ text: 'Login successful!', type: "success" });
       navigate("/");
     } catch (error) {
-      setMessage({ text: message, type: "error" });
+      setMessage({ text: 'login unsuccessful', type: "error" });
     }
   };
 
