@@ -17,7 +17,7 @@ import {
 
 export const testAuth = async (token) => {
   try {
-    const response = await fetch(`http://localhost:8080/api/auth/test`, {
+    const response = await fetch(`http://localhost:8080/test`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -264,12 +264,10 @@ export async function makePost(
   poketype1,
   poketype2,
   pokespecies,
-  height,
-  weight,
   sign_ability
 ) {
   try {
-    const response = await fetch(BASE_URL_POSTS, {
+    const response = await fetch(`http://localhost:8080/api/new-post-form`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -282,8 +280,6 @@ export async function makePost(
           poketype1,
           poketype2,
           pokespecies,
-          height,
-          weight,
           sign_ability,
         },
       }),

@@ -9,8 +9,6 @@ export default function NewPostForm() {
   const [postPoketype1, setPostPoketype1] = useState("");
   const [postPoketype2, setPostPoketype2] = useState("");
   const [postPokespecies, setPostPokespecies] = useState("");
-  const [postHeight, setPostHeight] = useState("");
-  const [postWeight, setPostWeight] = useState("");
   const [postSign_ability, setPostSign_ability] = useState("");
 
   const [submitted, setSubmitted] = useState(false);
@@ -75,7 +73,7 @@ export default function NewPostForm() {
         </label>
         <hr />
         <label>
-		Pokémon Type:{" "}
+          Pokémon Type:{" "}
           <label>
             <input
               value={postPoketype1}
@@ -87,7 +85,7 @@ export default function NewPostForm() {
         </label>
         <hr />
         <label>
-		Pokémon Species:{" "}
+          Pokémon Species:{" "}
           <input
             value={postPokespecies}
             onChange={(e) => {
@@ -98,7 +96,7 @@ export default function NewPostForm() {
         <hr />
         <div>
           <label>
-		  Pokémon Signature Ability:{" "}
+            Pokémon Signature Ability:{" "}
             <input
               value={postSign_ability}
               onChange={(e) => {
