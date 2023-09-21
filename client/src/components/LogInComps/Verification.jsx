@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/index";
+import { setProfile } from "../redux/index";
 
 const VerificationPage = ({ message, setMessage }) => {
   const navigate = useNavigate();
@@ -40,9 +41,12 @@ const VerificationPage = ({ message, setMessage }) => {
             password,
         }),
       });
-      const {token} = await response.json()
+      const {token, user} = await response.json()
+
       dispatch(setToken(token));
-      setMessage({ text: message, type: "success" });
+      dispatch(setProfile(user))
+
+      setMessage({ text: 'Login successful!', type: "success" });
       navigate("/");
     } catch (error) {
       setMessage({ text: message, type: "error" });

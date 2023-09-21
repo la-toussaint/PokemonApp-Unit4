@@ -38,10 +38,6 @@ export default function App() {
   
   React.useEffect(() => {
     if (isLoggedIn) {
-      fetchProfile(token).then((data) => {
-        dispatch(setProfile(data));
-      });
-
       testAuth(token).then((data) => console.log('user is authorized', data.authorized))
     }
   }, [isLoggedIn]);

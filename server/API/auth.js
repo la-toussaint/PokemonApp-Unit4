@@ -54,7 +54,7 @@ router.post("/login", async (req, res, next) => {
       });
 
       delete user.password;
-      res.send({ token });
+      res.send({ token, user });
     }
   } catch (error) {
     next(error);
