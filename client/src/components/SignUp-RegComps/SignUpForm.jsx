@@ -19,8 +19,8 @@ export default function Register({ token }) {
     e.preventDefault();
     console.log(username, password);
     const register = await registerUser(username, password);
-    setToken(register.token);
-    console.log(register);
+    setToken(token);
+    console.log(register.token);
     setUsername("");
     setPassword("");
     setSuccess(message);

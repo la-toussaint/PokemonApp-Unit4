@@ -10,7 +10,7 @@ export default function NewPostForm() {
   const [postPoketype2, setPostPoketype2] = useState("");
   const [postPokespecies, setPostPokespecies] = useState("");
   const [postSign_ability, setPostSign_ability] = useState("");
-
+  console.log('postPokename: ', postPokename);
   const [submitted, setSubmitted] = useState(false);
 
   async function handleSubmit(e) {
@@ -54,7 +54,7 @@ export default function NewPostForm() {
           <input
             value={postNational_num}
             onChange={(e) => {
-              setPostNational_num("");
+              setPostNational_num(e.target.value);
             }}
           />
         </label>
@@ -66,7 +66,7 @@ export default function NewPostForm() {
             <input
               value={postPokename}
               onChange={(e) => {
-                setPostPokename("");
+                setPostPokename(e.target.value);
               }}
             />
           </label>
@@ -78,7 +78,7 @@ export default function NewPostForm() {
             <input
               value={postPoketype1}
               onChange={(e) => {
-                setPostPoketype1("");
+                setPostPoketype1(e.target.value);
               }}
             />
           </label>
@@ -89,7 +89,7 @@ export default function NewPostForm() {
           <input
             value={postPokespecies}
             onChange={(e) => {
-              setPostPokespecies("");
+              setPostPokespecies(e.target.value);
             }}
           />
         </label>
@@ -100,7 +100,7 @@ export default function NewPostForm() {
             <input
               value={postSign_ability}
               onChange={(e) => {
-                setPostSign_ability("");
+                setPostSign_ability(e.target.value);
               }}
             />
           </label>

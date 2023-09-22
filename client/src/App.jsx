@@ -35,14 +35,14 @@ const AuthRoute = ({token, children}) => {
   ]);
 
   const [message, setMessage] = React.useState(null);
-  const dispatch = useDispatch();
-  React.useEffect(() => {
-    if (isLoggedIn) {
-		testAuth(token).then((data) => console.log('user is authorized', data))
-    //   fetchProfile(token)(dispatch).then((data) => {
-    //    (setProfile(data));
-      };
-    }, [isLoggedIn]);
+//   const dispatch = useDispatch();
+//   React.useEffect(() => {
+//     if (isLoggedIn) {
+// 		testAuth(token).then((data) => console.log('user is authorized', data))
+//     //   fetchProfile(token)(dispatch).then((data) => {
+//     //    (setProfile(data));
+//       };
+//     }, [isLoggedIn]);
 
   return (
     <>

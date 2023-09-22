@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Grid,
   Paper,
@@ -8,17 +8,15 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setToken } from "../redux/index";
+import { setProfile, setToken } from "../redux/index";
+import { login } from "../../API/ajax-helpers";
 
-const VerificationPage = ({ message, setMessage }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+export default function VerificationPage({ message, setMessage }) {
+  const nav = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [fav_pokemon, setFav_pokemon] = useState("");
   const [name, setName] = useState("");
-
   const paperStyle = {
     padding: 20,
     height: "70vh",
@@ -27,34 +25,19 @@ const VerificationPage = ({ message, setMessage }) => {
   };
   const btnstyle = { margin: "8px 0" };
 
-  const loginUser = async (e) => {
+  const handleSubmit = async (e, token, profile) => {
     e.preventDefault();
-    try {
-      console.log("makin request");
-      console.log("username", username);
-      console.log("password", password);
+    console.log("makin request");
+    console.log("username", username);
+    console.log("password", password);
+    const register = await login(username, password);
 
-      const response = await fetch(`http://localhost:8080/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user: {
-            username,
-            password,
-          },
-        }),
-	});
-      const {token, user} = await response.json();
-      console.log("response: ", token, user);
-      dispatch(setToken(token));
-	  dispatch(setProfile(user))
-      setMessage({ text: "login successful!", type: "success" });
-      navigate("/");
-    } catch (error) {
-      setMessage({ text: message, type: "error" });
-    }
+    console.log(register);
+    setUsername("");
+    setPassword("");
+    setToken(token);
+    setProfile(profile);
+    nav("/new-post-form");
   };
 
   return (
@@ -103,13 +86,11 @@ const VerificationPage = ({ message, setMessage }) => {
           variant="contained"
           style={btnstyle}
           fullWidth
-          onClick={loginUser}
+          onClick={handleSubmit}
         >
           Sign in
         </Button>
       </Paper>
     </Grid>
   );
-};
-
-export default VerificationPage;
+}

@@ -47,9 +47,7 @@ client.connect(
 app.use("/", indexRouter);
 app.use("/api", indexRouter);
 
-app.post("/test", authRequired, (req, res, next) => {
-  res.send("You are authorized");
-});
+app.post("/test", authRequired);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

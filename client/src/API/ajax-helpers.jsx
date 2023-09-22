@@ -1,5 +1,5 @@
 import React, { useState, dispatch } from "react";
-import { setProfile } from "../components/redux";
+
 
 import {
   BASE_URL_USERS_ME,
@@ -14,28 +14,26 @@ import {
   BASE_URL_AUTH_LOGIN,
 } from "./index";
 
-
 export const testAuth = async (token) => {
   try {
     const response = await fetch(`http://localhost:8080/test`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token
+        Authorization: token,
       },
     });
     const result = await response.json();
-    return result
+    return result;
   } catch (error) {
     console.error(error);
     // Handle non-OK response status here (e.g., show an error message
   }
 };
 
-
 export const login = async (username, password) => {
   try {
-    const response = await fetch(`BASE_URL_AUTH_LOGIN`, {
+    const response = await fetch(`http://localhost:8080/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,12 +45,12 @@ export const login = async (username, password) => {
         },
       }),
     });
-	
+
     const result = await response.json();
     console.log(result);
     return result;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -74,7 +72,7 @@ export const registerUser = async (username, password) => {
     console.log(result);
     return result;
   } catch (err) {
-    console.error(`Authentication failed with status ${err}`);
+    console.error("Authentication failed with status", err);
     // Handle non-OK response status here (e.g., show an error message
   }
 };
@@ -154,8 +152,9 @@ export const fetchProfile = (token) => async (dispatch, setProfile) => {
         Authorization: `${token}`,
       },
     });
-	if (!response.ok) { throw new Error("Request failed");
-}
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
     const result = await response.json();
     dispatch(setProfile(result));
   } catch (error) {
@@ -166,7 +165,7 @@ export const fetchProfile = (token) => async (dispatch, setProfile) => {
 export const deletePost = async (token, pokedata_id) => {
   try {
     const response = await fetch(
-      `${`http://localhost:8080/api/posts`}/${pokedata_id}`,
+      `${`http://localhost:8080/api/pokedata`}/${pokedata_id}`,
       {
         method: "DELETE",
         headers: {
@@ -178,8 +177,8 @@ export const deletePost = async (token, pokedata_id) => {
     const result = await response.json();
     console.log(result);
     return result;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -221,7 +220,7 @@ export default function RenderSelectedUser({ user_id, token }) {
   useEffect(() => {
     async function fetchSelectedUser(token) {
       try {
-        const response = await fetch(`BASE_URL_USERS_ME`, {
+        const response = await fetch(`http://localhost:8080/test`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -267,7 +266,7 @@ export async function makePost(
   sign_ability
 ) {
   try {
-    const response = await fetch(`http://localhost:8080/api/new-post-form`, {
+    const response = await fetch(`http://localhost:8080/api/pokedata`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -287,7 +286,7 @@ export async function makePost(
     const result = await response.json();
     console.log(result);
     return result;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
   }
 }
