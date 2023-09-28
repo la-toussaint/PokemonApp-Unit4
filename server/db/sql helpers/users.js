@@ -51,8 +51,7 @@ async function getUsersById(user_id) {
   }
 }
 
-const getUsersByUsername = async (username, password) => {
-  console.log("username: ", username);
+const getUsersByUsername = async (username) => {
   const {
     rows: [user],
   } = await client.query(
@@ -60,11 +59,9 @@ const getUsersByUsername = async (username, password) => {
 		SELECT * 
 		FROM users
 		WHERE users.username = $1
-		AND users.password = $2;
 		`,
-    [username, password]
+    [username]
   );
-  console.log("user: ", user);
   return user;
 };
 

@@ -55,9 +55,9 @@ export const login = async (username, password) => {
 	}
   };	
 
-export const registerUser = async (username, password) => {
+export const registerUser = async (username, password, name, fav_pokemon) => {
   try {
-    const response = await fetch(`BASE_URL_AUTH_REG`, {
+    const response = await fetch(BASE_URL_AUTH_REG, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -66,18 +66,18 @@ export const registerUser = async (username, password) => {
         user: {
           username,
           password,
+          name, 
+          fav_pokemon
         },
       }),
     });
     const result = await response.json();
-    console.log(result);
-    return result;
+    return result
   } catch (error) {
-    console.error("Authentication failed with status", error);
+    setError(`Authentication failed with status ${response.status}`);
     // Handle non-OK response status here (e.g., show an error message
   }
 };
-
 export const fetchAllUsers = async () => {
   try {
     // write a fetch request for:
