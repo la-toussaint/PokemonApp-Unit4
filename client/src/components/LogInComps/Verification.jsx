@@ -10,9 +10,12 @@ import {
 import { useNavigate } from "react-router-dom";
 // import { setProfile, setToken } from "../redux/index";
 import { login } from "../../API/ajax-helpers";
+import { useDispatch } from 'react-redux';
 
-export default function VerificationPage({ e, token, profile }) {
+export default function VerificationPage({ setMessage }) {
   const nav = useNavigate();
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [setToken] = useState("");
@@ -20,6 +23,7 @@ export default function VerificationPage({ e, token, profile }) {
   
   const [fav_pokemon, setFav_pokemon] = useState("");
   const [name, setName] = useState("");
+
   const paperStyle = {
     padding: 20,
     height: "70vh",
@@ -28,22 +32,28 @@ export default function VerificationPage({ e, token, profile }) {
   };
   const btnstyle = { margin: "8px 0" };
 
-  const handleSubmit = async (e, token, profile) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("makin request");
-    console.log("username", username);
-    console.log("password", password);
     const register = await login(username, password);
 
-    console.log(register);
-    setUsername("");
-    setPassword("");
-    setToken(token);
-	console.log(token)
-    setProfile(profile);
-	console.log(profile)
-	
-    // nav("/all-cards");
+    if(!Boolean(register?.error)) {
+      setUsername("");
+      setPassword("");
+      dispatch(setToken(register.token));
+      dispatch(setProfile(register.user));
+      setMessage({
+        type: "success",
+        text: "You have successfully signed in!"
+      });
+      nav("/new-post-form");
+
+      return
+    }
+
+    setMessage({
+      type: "error",
+      text: register?.error?.message || 'Unknown Error Occurred'
+    });
   };
 
   return (

@@ -16,7 +16,6 @@ router.get("/", async (req, res, next) => {
     const users = await getAllUsers();
     res.send(users);
   } catch (error) {
-    console.log("error: ", error);
     next(error);
   }
 });

@@ -17,12 +17,11 @@ router.get("/", async (req, res, next) => {
 
 router.post("/register", async (req, res, next) => {
   try {
-    console.log(req.body);
-    const { username, password } = req.body;
+    const { username, password, fav_pokemon, name } = req.body.user;
     //hashing the password
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     //sending username and hashed pw to database
-    const user = await createUsers({ username, password: hashedPassword });
+    const user = await createUsers({ username, password: hashedPassword, fav_pokemon, name });
     //removing password from user object for security reasons
     delete password;
 
@@ -36,27 +35,20 @@ router.post("/register", async (req, res, next) => {
       signed: true,
     });
 
-    delete password;
-    // console.log(res)
+    delete user.password;
 
-    res.send({ user });
+    res.send({ user, fav_pokemon, name, token  });
   } catch (error) {
-    next(error);
+    res.json({ error })
   }
 });
 
 router.post("/login", async (req, res, next) => {
   try {
-    console.log(req.body);
-    const { username, password } = req.body;
-	
-	const userReg = userRegViaWeb ? hashedPassword : userPassword;
-	const userPassword = await bcryptHash(password, SALT_ROUNDS)
-    const user = await getUsersByUsername(username);
-    console.log(user);
-    const validPassword = await bcryptCompare(password, userPassword);
-
-    delete userPassword;
+    const { username, password, fav_pokemon, name } = req.body.user;
+    const user  = await getUsersByUsername(username);
+    const validPassword = await bcrypt.compare(password, user.password);
+    
     if (validPassword) {
       //creating our token
       const token = jwt.sign(
@@ -71,18 +63,16 @@ router.post("/login", async (req, res, next) => {
         signed: true,
       });
 
-      delete userPassword;
-      res.send({ user, token, 
-	  loggedIn: true,
-      message: "Logged In",
-    })
-}
+      delete user.password;
+      return res.send({ user, fav_pokemon, name, token  });
+    }
+    res.json({ error: { message: 'Invalid password' } })
   } catch (error) {
-    next(error);
+    res.json({ error })
   }
 });
 
-router.post("/logout", async (req, res, next) => {
+router.get("/logout", async (req, res, next) => {
   try {
     res.clearCookie("token", {
       sameSite: "strict",

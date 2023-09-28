@@ -1,42 +1,48 @@
 import { react, useState } from "react";
-// import { setToken } from "../redux/index";
+import { setProfile, setToken } from "../redux/index";
 import { registerUser } from "../../API/ajax-helpers";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const BASE_URL = `http://localhost:8080`;
 export const BASE_URL_USER_REG = `${BASE_URL}/api/auth/register`;
 
-export default function Register({ token }) {
+export default function Register({ setMessage }) {
   const [name, setName] = useState("");
   const [fav_pokemon, setFav_pokemon] = useState("");
   const [username, setUsername] = useState("");
   const [setToken] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
   const nav = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleSubmit = async (e, token ) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(username, password);
-    const register = await registerUser(username, password);
-    setToken(token);
-    console.log(register.token);
-    setUsername("");
-    setPassword("");
-    setSuccess(message);
-    nav("/posts");
+    const register = await registerUser(username, password, name, fav_pokemon);
+ 
+    if(!Boolean(register?.error)) {
+      dispatch(setToken(register.token));
+      dispatch(setProfile(register.user));
+      setUsername("");
+      setPassword("");
+      setMessage({
+        type: "success",
+        text: "Success! You have been registered. Thank you for signing up."
+      });
+      nav("/posts");
+      return 
+    };
+
+    setMessage({
+      type: "error",
+      text: `There was an error in the registration process: ${register.error.detail} ` || 'Unknown Error Occurred'
+    });
   };
 
   return (
     <>
-      <h2 className="sign-up">Authenticate!</h2>
-      {successMessage && <p className="sign-up-success">{successMessage}</p>}
-      {error && <p>{error}</p>}
-      <button onSubmit={handleSubmit} disabled={!token}>
-        Authenticate Token!
-      </button>
-      <form className="sign-up-form">
+      <h2 className="sign-up">New User Sign-Up</h2>
+      <form className="sign-up-form" onSubmit={handleSubmit}>
         <label>
           Name: <br />
           <input

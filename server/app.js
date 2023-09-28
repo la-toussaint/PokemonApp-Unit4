@@ -22,8 +22,6 @@ app.use(
   })
 );
 app.use(logger("dev"));
-app.use(cookieParser(COOKIE_SECRET));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -35,6 +33,7 @@ const connect = client.connect(url, {
 });
 
 app.use(morgan("dev"));
+app.use(cookieParser(COOKIE_SECRET));
 app.use(express.json());
 
 client.connect(
