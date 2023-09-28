@@ -8,7 +8,7 @@ const { Client } = require('pg')
 
 const bcrypt = 'bcrypt'
 //Establishing connect to database (like how we do with http://)
-const server = 'ryanlynn'
+const server = 'pokedex'
 const client = new Client(`postgres://localhost:5432/${server}`)
 
 
