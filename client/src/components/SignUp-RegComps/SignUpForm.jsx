@@ -1,5 +1,5 @@
 import { react, useState } from "react";
-import { setToken } from "../redux/index";
+// import { setToken } from "../redux/index";
 import { registerUser } from "../../API/ajax-helpers";
 import { useNavigate } from "react-router-dom";
 
@@ -10,12 +10,13 @@ export default function Register({ token }) {
   const [name, setName] = useState("");
   const [fav_pokemon, setFav_pokemon] = useState("");
   const [username, setUsername] = useState("");
+  const [setToken] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const nav = useNavigate();
 
-  const handleSubmit = async (e, token) => {
+  const handleSubmit = async (e, token ) => {
     e.preventDefault();
     console.log(username, password);
     const register = await registerUser(username, password);

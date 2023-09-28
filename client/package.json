@@ -12,25 +12,23 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.14.5",
-    "@reduxjs/toolkit": "^1.9.5",
+    "@mui/material": "^5.14.11",
     "cors": "^2.8.5",
     "mime-db": "^1.52.0",
     "react": "^18.2.0",
-    "react-card-flip": "^1.2.0",
+    "react-card-flip": "^1.2.2",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.1.2",
     "react-refresh": "^0.14.0",
     "react-router-dom": "^6.16.0",
-    "redux": "^4.2.1",
-    "redux-thunk": "^2.4.2",
-    "thunk": "^0.0.1"
+	"@reduxjs/toolkit": "1.9.6"
+	
+   
   },
   "devDependencies": {
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@vitejs/plugin-react": "^4.0.4",
-    "eslint": "^8.45.0",
+    "@types/react": "^18.2.23",
+    "@types/react-dom": "^18.2.8",
+    "@vitejs/plugin-react": "^4.1.0",
+    "eslint": "^8.50.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",

@@ -31,28 +31,29 @@ export const testAuth = async (token) => {
   }
 };
 
-export const login = async (username, password) => {
-  try {
-    const response = await fetch(`http://localhost:8080/api/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user: {
-          username,
-          password,
-        },
-      }),
-    });
 
-    const result = await response.json();
-    console.log(result);
-    return result;
-  } catch (error) {
-    console.error(error);
-  }
-};
+export const login = async (username, password) => {
+	try {
+	  const response = await fetch(`http://localhost:8080/api/auth/login`, {
+		method: "POST",
+		headers: {
+		  "Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+		  user: {
+			username,
+			password,
+		  },
+		}),
+	  });
+  
+	  const result = await response.json();
+	  console.log(result);
+	  return result;
+	} catch (error) {
+	  console.error(error);
+	}
+  };	
 
 export const registerUser = async (username, password) => {
   try {
@@ -71,8 +72,8 @@ export const registerUser = async (username, password) => {
     const result = await response.json();
     console.log(result);
     return result;
-  } catch (err) {
-    console.error("Authentication failed with status", err);
+  } catch (error) {
+    console.error("Authentication failed with status", error);
     // Handle non-OK response status here (e.g., show an error message
   }
 };
@@ -84,7 +85,7 @@ export const fetchAllUsers = async () => {
     const response = await fetch(`http://localhost:8080/api/users`);
     const result = await response.json();
 
-    return result;
+    return result
   } catch (error) {
     console.error(error);
   }
@@ -98,7 +99,7 @@ export const fetchAllPokedata = async () => {
     const result = await response.json();
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -108,7 +109,7 @@ export const fetchAllGmax = async () => {
     const result = await response.json();
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -119,7 +120,7 @@ export const fetchAllPoke_egg = async () => {
     console.log(result.poketype_egg);
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -129,7 +130,7 @@ export const fetchAllEgg_group = async () => {
     const result = await response.json();
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -139,7 +140,7 @@ export const fetchAllBreed = async () => {
     const result = await response.json();
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -158,7 +159,7 @@ export const fetchProfile = (token) => async (dispatch, setProfile) => {
     const result = await response.json();
     dispatch(setProfile(result));
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -195,7 +196,7 @@ export default function RenderSelectedUser({ user_id, token }) {
       const selectedUser = await response.json();
       return selectedUser;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

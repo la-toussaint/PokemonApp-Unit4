@@ -8,13 +8,16 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { setProfile, setToken } from "../redux/index";
+// import { setProfile, setToken } from "../redux/index";
 import { login } from "../../API/ajax-helpers";
 
-export default function VerificationPage({ message, setMessage }) {
+export default function VerificationPage({ e, token, profile }) {
   const nav = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [setToken] = useState("");
+  const [setProfile] = useState("");
+  
   const [fav_pokemon, setFav_pokemon] = useState("");
   const [name, setName] = useState("");
   const paperStyle = {
@@ -36,8 +39,11 @@ export default function VerificationPage({ message, setMessage }) {
     setUsername("");
     setPassword("");
     setToken(token);
+	console.log(token)
     setProfile(profile);
-    nav("/new-post-form");
+	console.log(profile)
+	
+    // nav("/all-cards");
   };
 
   return (

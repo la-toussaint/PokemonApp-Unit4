@@ -3,16 +3,19 @@ import NavBar from "./navbar";
 import { useState } from "react";
 
 import { fetchProfile, deletePost } from "../API/ajax-helpers";
-import { setProfile, deletePostFromProfile } from "./redux/index";
+// import { setProfile, deletePostFromProfile } from "./redux/index";
 import React from "react";
 
 export default function ProfileLog() {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const profile = useSelector((state) => state.auth.profile);
-  const token = useSelector((state) => state.auth.token);
+//   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+//   const profile = useSelector((state) => state.auth.profile);
+//   const token = useSelector((state) => state.auth.token);
   const [isOpen, setIsOpen] = useState(true);
   const [posts, postList] = useState([]);
-  console.log(setProfile(profile));
+  const [setProfile] = useState("");
+  const [deletePostFromProfile] = useState("");
+  
+  console.log(setUsers(user));
 
   const dispatch = useDispatch();
   React.useEffect(() => {
