@@ -48,11 +48,11 @@ router.post("/login", async (req, res, next) => {
     const { username, password, fav_pokemon, name } = req.body.user;
     const user  = await getUsersByUsername(username);
     const validPassword = await bcrypt.compare(password, user.password);
-    
+    console.log('validPassword: ', validPassword);
     if (validPassword) {
       //creating our token
       const token = jwt.sign(
-        { user: { username: username, password: hashedPassword } },
+        user,
         JWT_SECRET
       );
 
@@ -64,6 +64,7 @@ router.post("/login", async (req, res, next) => {
       });
 
       delete user.password;
+      console.log('user, fav_pokemon, name, token: ', user, fav_pokemon, name, token);
       return res.send({ user, fav_pokemon, name, token  });
     }
     res.json({ error: { message: 'Invalid password' } })
