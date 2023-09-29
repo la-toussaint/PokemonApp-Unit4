@@ -4,13 +4,13 @@ import { useSelector } from "react-redux";
 
 export default function NewPostForm() {
   const token = useSelector((state) => state.auth.token);
-  const [postPokename, setPostPokename] = useState("");
-  const [postNational_num, setPostNational_num] = useState("");
-  const [postPoketype1, setPostPoketype1] = useState("");
-  const [postPoketype2, setPostPoketype2] = useState("");
-  const [postPokespecies, setPostPokespecies] = useState("");
-  const [postSign_ability, setPostSign_ability] = useState("");
-  console.log('postPokename: ', postPokename);
+  const [pokename, setPokename] = useState("");
+  const [national_num, setNational_num] = useState("");
+  const [poketype1, setPoketype1] = useState("");
+  const [poketype2, setPoketype2] = useState("");
+  const [pokespecies, setPokespecies] = useState("");
+  const [sign_ability, setSign_ability] = useState("");
+  console.log("pokename: ", pokename);
   const [submitted, setSubmitted] = useState(false);
 
   async function handleSubmit(e) {
@@ -19,42 +19,41 @@ export default function NewPostForm() {
 
     // Read the data from state
     console.log({
-      postPokename,
-      postNational_num,
-      postPoketype1,
-      postPokespecies,
-      postSign_ability,
+      national_num,
+      pokename,
+      poketype1,
+      pokespecies,
+      sign_ability,
     });
     await makePost(
-      token,
-      postNational_num,
-      postPokename,
-      postPoketype1,
-      postPokespecies,
-      postSign_ability
+      national_num,
+      pokename,
+      poketype1,
+      pokespecies,
+      sign_ability
     );
     resetForm();
     setSubmitted(true);
   }
 
   function resetForm() {
-    setPostNational_num("");
-    setPostPokename("");
-    setPostPoketype1("");
-    setPostPokespecies("");
-    setPostSign_ability("");
+    setNational_num("");
+    setPokename("");
+    setPoketype1("");
+    setPokespecies("");
+    setSign_ability("");
   }
   return (
     <>
       {submitted && <h1>Your post has been added - Happy shopping!</h1>}
-      <form className="newPost-form" onSubmit={handleSubmit}>
+      <form className="new-post-form" onSubmit={handleSubmit}>
         <h3 className="new-post-title">Add A Pokémon Here! </h3>
         <label>
           Pokémon National Number:{" "}
           <input
-            value={postNational_num}
+            value={national_num}
             onChange={(e) => {
-              setPostNational_num(e.target.value);
+              setNational_num(e.target.value);
             }}
           />
         </label>
@@ -64,9 +63,9 @@ export default function NewPostForm() {
           Pokémon Name:{" "}
           <label>
             <input
-              value={postPokename}
+              value={pokename}
               onChange={(e) => {
-                setPostPokename(e.target.value);
+                setPokename(e.target.value);
               }}
             />
           </label>
@@ -76,9 +75,9 @@ export default function NewPostForm() {
           Pokémon Type:{" "}
           <label>
             <input
-              value={postPoketype1}
+              value={poketype1}
               onChange={(e) => {
-                setPostPoketype1(e.target.value);
+                setPoketype1(e.target.value);
               }}
             />
           </label>
@@ -87,9 +86,9 @@ export default function NewPostForm() {
         <label>
           Pokémon Species:{" "}
           <input
-            value={postPokespecies}
+            value={pokespecies}
             onChange={(e) => {
-              setPostPokespecies(e.target.value);
+              setPokespecies(e.target.value);
             }}
           />
         </label>
@@ -98,9 +97,9 @@ export default function NewPostForm() {
           <label>
             Pokémon Signature Ability:{" "}
             <input
-              value={postSign_ability}
+              value={sign_ability}
               onChange={(e) => {
-                setPostSign_ability(e.target.value);
+                setSign_ability(e.target.value);
               }}
             />
           </label>

@@ -8,4 +8,4 @@ export const BASE_URL_USERS_ME = `http://localhost:8080/test`;
 export const BASE_URL_AUTH_REG = `http://localhost:8080/api/auth/register`;
 export const BASE_URL_USERS = `http://localhost:8080/api/users`;
 export const BASE_URL_AUTH_LOGIN = `http://localhost:8080/api/auth/login`;
-export const BASE_URL_DELET = `http://localhost:8080/api/posts`;
+export const BASE_URL_DELET = `http://localhost:8080/api/pokedata/pokedata_id`;

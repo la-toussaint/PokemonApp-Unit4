@@ -21,13 +21,15 @@ export default function AllCards() {
   const renderImages = () => {
     checkIfCrossoriginMeAvailable()
       .then((crossoriginMeAvailable) => {
-        return imageUrls.map((imageUrl) => (
+        return imageUrls.map((imageUrl, index) => (
           <img
             src={
               crossoriginMeAvailable
                 ? `https://crossorigin.me/${imageUrl}`
                 : `https://cors-anywhere.herokuapp.com/${imageUrl}`
             }
+            alt
+            id="image-alt"
             type="image/png"
           />
         ));

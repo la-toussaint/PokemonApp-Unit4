@@ -15,7 +15,7 @@ export default function NavBar() {
       <Link to="/all-cards">All Posts</Link>
       {!Boolean(token) && <Link to="/register">Register</Link>}
       {!Boolean(token) && <Link to="/login">Log In</Link>}
-      <Link to="/user-profile">Profile</Link>
+      <Link to="/users-profile">Profile</Link>
       <Link to="/new-post-form">New Post</Link>
     </div>
   );

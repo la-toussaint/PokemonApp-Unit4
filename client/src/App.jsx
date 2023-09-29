@@ -1,63 +1,49 @@
-import React, { useState } from "react";
-// import Authenticate from "./components/SignUp-RegComps/Authenticate";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import SignUpForm from "./components/SignUp-RegComps/SignUpForm";
 import VerificationPage from "./components/LogInComps/Verification";
-import NavBar from "./components/navbar";
-import AllCards from "./components/AllCards";
-import { Messages } from "./components/Messages";
-import { fetchProfile, testAuth } from "./API/ajax-helpers";
-// import  { setProfile } from "./components/redux/index";
-import { Routes, Route } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import NewPost from "./components/NewPost";
 import SingleProfile from "./components/SingleProfile";
-
-// @reduxjs/toolkit
+import NavBar from "./components/navbar";
+import AllCards from "./components/AllCards";
 import "./index.css";
+import { Messages } from "./components/Messages";
+import { fetchProfile, testAuth } from "./API/ajax-helpers";
+import { setToken, setProfile } from "./components/redux/index";
+import { Routes, Route } from "react-router-dom";
 
-const AuthRoute = ({ token, user, children }) => {
-  if (Boolean(token)) {
-    return children.then(data);
+const AuthRoute = ({ children }) => {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  // Log the isLoggedIn variable
+  console.log("isLoggedIn:", isLoggedIn);
+
+  if (!isLoggedIn) {
+    return (
+      <div style={{ marginTop: "10em", backgroundColor: "red" }}>
+        You Are Not Authorized To View This Route
+      </div>
+    );
   }
-  console.log(children, data);
-  return (
-    <div style={{ marginTop: "10em", backgroundColor: "red" }}>
-      You Are Not Authorized To View This Route
-    </div>
-  );
+
+  // Render the protected content (children) if the user is authenticated
+  return <>{children}</>;
 };
 
-export default function App() {
-  //   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  //   const profile = useSelector((state) => state.auth.profile);
-  //   const token = useSelector((state) => state.auth.token);
-
-  const [user, setUsers$({user_id, setUser_id}), (name, setName), (username, setUsername), (password, setPassword)) => { 
- 
-[user_id: 1, name: "Name1", username: "Username1", password: "userRegViaWeb1" ? "hashedPassword1" : "userPassword1"],,
-    {
-      user_id: 2,
-      name: "Name2",
-      username: "Username2",
-      password: "userRegViaWeb2" ? "hashedPassword2" : "userPassword2",
-    },
-    {
-      user_id: 3,
-      name: "Name3",
-      username: "Username3",
-      password: "userRegViaWeb2" ? "hashedPassword3" : "userPassword3",
-    },
-]};
-  console.log("users: ", user, username, password);
-  const [message, setMessage] = React.useState(null);
+export default function App(users, username, password, result, isLoggedIn) {
+  console.log("users: ", users, username, password);
+  const [message, setMessage] = useState(null);
+  const [token, setToken] = useState(null);
   const dispatch = useDispatch();
   React.useEffect(() => {
     if (isLoggedIn) {
-      testAuth(token).then((data) => console.log("user is authorized", data));
+      testAuth(token).then((result) =>
+        console.log("user is authorized", result)
+      );
       //   fetchProfile(token)(dispatch).then((data) => {
       //    (setProfile(data));
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, token]);
 
   return (
     <>
@@ -71,12 +57,12 @@ export default function App() {
             </AuthRoute>
           }
         />
-
+        {/* </AuthRoute> */}
         <Route
           path="/new-post-form"
           element={
             <AuthRoute token={token}>
-              <NewPost token={token} />
+              <NewPost />
             </AuthRoute>
           }
         />
@@ -86,10 +72,28 @@ export default function App() {
         {/* <Route path="/users/:userId" element={<RenderSelectedUser users={users} />} /> */}
         <Route
           path="/login"
-          element={<VerificationPage setMessage={setMessage} />}
+          element={
+            <VerificationPage
+              setMessage={setMessage}
+              setToken={setToken}
+              setProfile={setProfile}
+            />
+          }
         />
-        <Route path="/register" element={<SignUpForm user={user} />} />
-        <Route path="/user-profile" element={<SingleProfile token={token} />} />
+        <Route
+          path="/register"
+          element={
+            <SignUpForm
+              users={users}
+              setToken={setToken}
+              setProfile={setProfile}
+            />
+          }
+        />
+        <Route
+          path="/users-profile"
+          element={<SingleProfile users={users} token={token} />}
+        />
       </Routes>
       {message && <Messages message={message} onClose={setMessage} />}
     </>

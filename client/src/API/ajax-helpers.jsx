@@ -1,6 +1,5 @@
 import React, { useState, dispatch } from "react";
 
-
 import {
   BASE_URL_USERS_ME,
   BASE_URL_USERS,
@@ -20,8 +19,9 @@ export const testAuth = async (token) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       },
+      body: "JSON",
     });
     const result = await response.json();
     return result;
@@ -31,48 +31,47 @@ export const testAuth = async (token) => {
   }
 };
 
-
 export const login = async (username, password) => {
-	try {
-	  const response = await fetch(`http://localhost:8080/api/auth/login`, {
-		method: "POST",
-		headers: {
-		  "Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-		  user: {
-			username,
-			password,
-		  },
-		}),
-	  });
-  
-	  const result = await response.json();
-	  console.log(result);
-	  return result;
-	} catch (error) {
-	  console.error(error);
-	}
-  };	
-
-export const registerUser = async (username, password, name, fav_pokemon) => {
   try {
-    const response = await fetch(BASE_URL_AUTH_REG, {
+    const response = await fetch(`http://localhost:8080/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user: {
+        users: {
           username,
           password,
-          name, 
-          fav_pokemon
+        },
+      }),
+    });
+
+    const result = await response.json();
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const registerUsers = async (username, password, name, fav_pokemon) => {
+  try {
+    const response = await fetch(`http://localhost:8080/api/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        users: {
+          username,
+          password,
+          name,
+          fav_pokemon,
         },
       }),
     });
     const result = await response.json();
-    return result
+    return result;
   } catch (error) {
     setError(`Authentication failed with status ${response.status}`);
     // Handle non-OK response status here (e.g., show an error message
@@ -85,7 +84,7 @@ export const fetchAllUsers = async () => {
     const response = await fetch(`http://localhost:8080/api/users`);
     const result = await response.json();
 
-    return result
+    return result;
   } catch (error) {
     console.error(error);
   }
@@ -150,8 +149,9 @@ export const fetchProfile = (token) => async (dispatch, setProfile) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${token}`,
+        Authorization: `Bearer ${token}`,
       },
+      body: "JSON",
     });
     if (!response.ok) {
       throw new Error("Request failed");
@@ -166,13 +166,14 @@ export const fetchProfile = (token) => async (dispatch, setProfile) => {
 export const deletePost = async (token, pokedata_id) => {
   try {
     const response = await fetch(
-      `${`http://localhost:8080/api/pokedata`}/${pokedata_id}`,
+      `http://localhost:8080/api/pokedata/pokedata_id`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${token}`,
+          Authorization: `Bearer ${token}`,
         },
+        body: "JSON",
       }
     );
     const result = await response.json();
@@ -183,75 +184,71 @@ export const deletePost = async (token, pokedata_id) => {
   }
 };
 
-export default function RenderSelectedUser({ user_id, token }) {
+export default function RenderSelectedUsers({ user_id, token }) {
   const fetchSingleUser = async (user_id, token) => {
     try {
-      const response = await fetch(`http://localhost:8080/test`, {
+      const response = await fetch(`http://localhost:8080/api/users/user_id`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${token}`,
+          Authorization: `Bearer ${token}`,
         },
+        body: "JSON",
       });
-      const selectedUser = await response.json();
-      return selectedUser;
+      const selectedUsers = await response.json();
     } catch (error) {
       console.error(error);
     }
+    return selectedUsers;
   };
+  const usersCard = document.createCard("div");
+  usersCard.classList.add("user");
+  usersCard.innerHTML = `
+  <h4>${users.name}</h4>
+  <p>${users.user_id}</p>
+  <p>${users.username}</p>
+  <p>${users.password}</p>
+  <p>${users.fav_pokemon}</p>
+  <p>${users.token}</p>
+  <p>${users.posts}</p>`;
+  usersContainer.appendChild(usersCard);
 
-  //   const userCard = document.createCard("div");
-  //   userCard.classList.add("user");
-  //   userCard.innerHTML = `
-  //         <h4>${user.name}</h4>
-  //         <p>${user.user_id}</p>
-  //         <p>${user.username}</p>
-  // 		<p>${user.password}</p>
-  //         <p>${user.fav_pokemon}</p>
-  // 		<p>${user.token}</p>
-  //         ${user.posts}</p>
-
-  //     `;
-  //   usersContainer.appendChild(userCard);
-  // } catch (error) {
-  //   console.log(error);
-
-  const [user, setUser] = useState({});
-
+  const [users, setUsers] = useState({});
   useEffect(() => {
-    async function fetchSelectedUser(token) {
+    async function fetchSelectedUsers(token) {
       try {
         const response = await fetch(`http://localhost:8080/test`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`,
+            Authorization: `Bearer ${token}`,
           },
+          body: "JSON",
         });
       } catch (error) {
         console.error(error);
       }
-
-      fetchSelectedUser();
+      fetchSelectedUsers();
     }
   });
+
   return (
     <div>
       <p>
         <b>Name: </b>
-        {user.name}
+        {users.name}
       </p>
       <p>
         <b>Username: </b>
-        {user.username}
+        {users.username}
       </p>
       <p>
         <b>Favorite Pokémon: </b>
-        {user.fav_pokemon}
+        {users.fav_pokemon}
       </p>
       <p>
         <b>Posts: </b>
-        {user.post}
+        {users.post}
       </p>
     </div>
   );
@@ -271,7 +268,7 @@ export async function makePost(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         post: {
